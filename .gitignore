@@ -1,0 +1,48 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.local
+.env.production
+.env.development
+
+# editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# misc
+*.tsbuildinfo
+
+# локальные артефакты Claude Code и MCP-серверов
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+.claude/*.png
+.playwright-mcp/
+
+# локальные секреты скиллов (cookies, токены и т.п.)
+.claude/skills/*/cookies/*
+!.claude/skills/*/cookies/.gitkeep
+
+# python-кэш в скиллах
+.claude/skills/**/__pycache__/
+
+# снятые VK-статьи (артефакты baslie-vk-article-extractor)
+/vk-articles/
+
+# артефакты браузерных скриншотов в корне
+/desktop-*.png
+/mobile-*.png

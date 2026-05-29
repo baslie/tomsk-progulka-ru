@@ -1,0 +1,44 @@
+---
+import type { ImageMetadata } from "astro";
+import { buildLightboxImage } from "@/lib/lightbox";
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  caption?: string;
+  loading?: "lazy" | "eager";
+  /** Ширина без рамок/скруглений (для широких кадров-героев). */
+  full?: boolean;
+}
+
+const { image, alt, caption, loading = "lazy", full = false } = Astro.props;
+const img = await buildLightboxImage(image, { thumbWidth: 1400, fullWidth: 2000 });
+---
+
+<figure class={`not-prose my-6 ${full ? "" : ""}`}>
+  <a
+    href={img.fullSrc}
+    data-pswp
+    data-pswp-width={img.fullWidth}
+    data-pswp-height={img.fullHeight}
+    data-pswp-caption={caption ?? alt}
+    target="_blank"
+    rel="noopener"
+    class="group block overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--muted)] cursor-zoom-in"
+  >
+    <img
+      src={img.thumbSrc}
+      width={img.thumbWidth}
+      height={img.thumbHeight}
+      alt={alt}
+      loading={loading}
+      decoding="async"
+      class="h-auto w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+    />
+  </a>
+  {caption && (
+    <figcaption class="mt-2 text-center text-sm text-[var(--muted-foreground)]">
+      {caption}
+    </figcaption>
+  )}
+</figure>

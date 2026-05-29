@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Страница не найдена">
+  <section class="container flex flex-col items-center py-20 text-center">
+    <p class="text-6xl font-bold text-[var(--muted-foreground)]">404</p>
+    <h1 class="mt-4 text-2xl font-semibold md:text-3xl">Страница не найдена</h1>
+    <p class="mt-2 max-w-md text-[var(--muted-foreground)]">
+      Возможно, страница была удалена или вы перешли по неактуальной ссылке.
+    </p>
+    <a
+      href="/"
+      class="mt-8 inline-flex h-10 items-center rounded-md bg-[var(--primary)] px-5 text-sm font-medium text-[var(--primary-foreground)] hover:opacity-90"
+    >
+      Вернуться на главную
+    </a>
+  </section>
+</BaseLayout>
