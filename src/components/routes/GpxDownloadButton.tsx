@@ -22,6 +22,8 @@ interface Props {
   buttonVariant?: VariantProps<typeof buttonVariants>["variant"];
   buttonSize?: VariantProps<typeof buttonVariants>["size"];
   buttonClassName?: string;
+  // Класс контейнера inline-кнопок (по умолчанию — ряд с переносом).
+  containerClassName?: string;
 }
 
 function DownloadIcon() {
@@ -35,6 +37,7 @@ function DownloadIcon() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      className="shrink-0"
     >
       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
       <polyline points="7 10 12 15 17 10" />
@@ -65,6 +68,7 @@ export function GpxDownloadButton({
   buttonVariant,
   buttonSize,
   buttonClassName,
+  containerClassName,
 }: Props) {
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement | null>(null);
@@ -82,7 +86,7 @@ export function GpxDownloadButton({
   // Inline-режим → отдельная кнопка на каждый вариант (без меню).
   if (inline && variants && variants.length > 0) {
     return (
-      <div className="flex flex-wrap gap-2">
+      <div className={containerClassName ?? "flex flex-wrap gap-2"}>
         {variants.map((v) => (
           <Button
             key={v.name}

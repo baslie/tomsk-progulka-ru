@@ -8,6 +8,7 @@ import {
   GpxDownloadButton,
   type GpxVariant,
 } from "@/components/routes/GpxDownloadButton";
+import { nakarteUrl } from "@/lib/nktk";
 import { LightboxRoot } from "@/components/media/LightboxRoot";
 import {
   DIFFICULTY_LABELS,
@@ -57,6 +58,20 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
         : { name: t.name, label, gpx: t.gpx, slug: `${route.id}-${i + 1}` };
     })
   : undefined;
+
+// Просмотр на nakarte.me: ссылка с треком, закодированным прямо в URL (nktk).
+// Та же короткая подпись, что и у кнопок скачивания.
+const nakarteVariants = (
+  data.tracks?.length
+    ? data.tracks
+    : [{ name: data.title, gpx: data.gpx, distanceKm: data.distanceKm }]
+).map((t) => {
+  const origin = t.name.split(" — ")[0];
+  const label = t.distanceKm
+    ? `${origin} · ${formatDistance(t.distanceKm)}`
+    : origin;
+  return { label, href: nakarteUrl([{ line: t.gpx, name: t.name }]) };
+});
 ---
 
 <BaseLayout
@@ -179,36 +194,74 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
           >
             <RouteMap tracks={mapTracks} client:only="react" />
           </div>
-          <div>
-            <p class="mb-2 text-xs font-medium text-white/80">Скачать GPX:</p>
-            {
-              gpxVariants ? (
-                <GpxDownloadButton
-                  variants={gpxVariants}
-                  inline
-                  buttonVariant="outline"
-                  buttonSize="sm"
-                  buttonClassName="border-white/40 bg-transparent text-white hover:bg-white/10"
-                  client:load
-                />
-              ) : (
-                <GpxDownloadButton
-                  variants={[
-                    {
-                      name: data.title,
-                      label: "Скачать GPX",
-                      gpx: data.gpx,
-                      slug: route.id,
-                    },
-                  ]}
-                  inline
-                  buttonVariant="outline"
-                  buttonSize="sm"
-                  buttonClassName="border-white/40 bg-transparent text-white hover:bg-white/10"
-                  client:load
-                />
-              )
-            }
+          <div class="grid grid-cols-2 gap-x-4 gap-y-2">
+            <div>
+              <p class="mb-2 text-xs font-medium text-white/80">Скачать GPX:</p>
+              {
+                gpxVariants ? (
+                  <GpxDownloadButton
+                    variants={gpxVariants}
+                    inline
+                    buttonVariant="outline"
+                    buttonSize="sm"
+                    containerClassName="flex flex-col gap-2"
+                    buttonClassName="h-auto min-h-7 w-full justify-start gap-1.5 whitespace-normal px-2 py-1.5 text-left text-[11px] leading-tight border-white/40 bg-transparent text-white hover:bg-white/10"
+                    client:load
+                  />
+                ) : (
+                  <GpxDownloadButton
+                    variants={[
+                      {
+                        name: data.title,
+                        label: "Скачать GPX",
+                        gpx: data.gpx,
+                        slug: route.id,
+                      },
+                    ]}
+                    inline
+                    buttonVariant="outline"
+                    buttonSize="sm"
+                    containerClassName="flex flex-col gap-2"
+                    buttonClassName="h-auto min-h-7 w-full justify-start gap-1.5 whitespace-normal px-2 py-1.5 text-left text-[11px] leading-tight border-white/40 bg-transparent text-white hover:bg-white/10"
+                    client:load
+                  />
+                )
+              }
+            </div>
+            <div>
+              <p class="mb-2 text-xs font-medium text-white/80">
+                Смотреть на nakarte.me:
+              </p>
+              <div class="flex flex-col gap-2">
+                {
+                  nakarteVariants.map((v) => (
+                    <a
+                      href={v.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex min-h-7 w-full items-center gap-1.5 rounded-md border border-white/40 bg-transparent px-2 py-1.5 text-left text-[11px] font-medium leading-tight text-white transition-colors hover:bg-white/10"
+                    >
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                        class="shrink-0"
+                      >
+                        <path d="M9 18l-6 2V6l6-2 6 2 6-2v14l-6 2-6-2Z" />
+                        <path d="M9 4v16M15 6v16" />
+                      </svg>
+                      {v.label}
+                    </a>
+                  ))
+                }
+              </div>
+            </div>
           </div>
         </div>
       </div>
