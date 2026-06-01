@@ -40,7 +40,8 @@ export function geoJsonToLeafletLatLngs(
   return geo.coordinates.map(([lng, lat]) => [lat, lng]);
 }
 
-function escapeXml(str: string): string {
+/** Экранирует &, <, >, ", ' для безопасной вставки в XML/HTML. */
+export function escapeXml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")

@@ -15,6 +15,7 @@ import {
 import {
   calculateBoundsFromGeoJson,
   geoJsonToLeafletLatLngs,
+  escapeXml,
   type Coord,
   type LeafletBounds,
 } from "@/lib/gpx";
@@ -84,11 +85,11 @@ export function RoutesMap({ routes }: { routes: MapRoute[] }) {
 
       const popupHtml = `
         <div class="route-popup">
-          <strong>${escapeHtml(route.title)}</strong>
+          <strong>${escapeXml(route.title)}</strong>
           <div style="margin-top:4px;font-size:0.8125rem;color:#525252">
             ${DIFFICULTY_LABELS[route.difficulty]} · ${SEASON_LABELS[route.season]}<br/>
             ${formatDistance(route.distanceKm)} · ${formatDuration(route.durationMin)}<br/>
-            ${escapeHtml(route.region)}
+            ${escapeXml(route.region)}
           </div>
           <a class="popup-link" href="/routes/${route.slug}/">Смотреть маршрут</a>
         </div>`;
@@ -110,12 +111,4 @@ export function RoutesMap({ routes }: { routes: MapRoute[] }) {
   }, [routes]);
 
   return <div ref={containerRef} className="h-full w-full" />;
-}
-
-function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
 }
