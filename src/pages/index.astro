@@ -37,11 +37,8 @@ import TelegramIcon from "@/components/icons/TelegramIcon.astro";
           href="https://vk.com/tomsk_progulka"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-white text-sm font-semibold transition-all duration-150 select-none"
-          style="background: #0077FF; box-shadow: 0 4px 0 #0057CC, 0 6px 12px rgba(0,119,255,0.35); transform: translateY(0);"
-          onmousedown="this.style.transform='translateY(3px)';this.style.boxShadow='0 1px 0 #0057CC, 0 2px 6px rgba(0,119,255,0.25)'"
-          onmouseup="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 0 #0057CC, 0 6px 12px rgba(0,119,255,0.35)'"
-          onmouseleave="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 0 #0057CC, 0 6px 12px rgba(0,119,255,0.35)'"
+          class="btn-3d inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-white text-sm font-semibold transition-all duration-150 select-none"
+          style="--btn-bg:#0077FF;--btn-shadow:0 4px 0 #0057CC, 0 6px 12px rgba(0,119,255,0.35);--btn-shadow-active:0 1px 0 #0057CC, 0 2px 6px rgba(0,119,255,0.25)"
         >
           <VkIcon class="h-5 w-5 shrink-0" />
           ВКонтакте
@@ -51,16 +48,26 @@ import TelegramIcon from "@/components/icons/TelegramIcon.astro";
           href="https://t.me/tomsk_progulka"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-white text-sm font-semibold transition-all duration-150 select-none"
-          style="background: #2AABEE; box-shadow: 0 4px 0 #1A8BC4, 0 6px 12px rgba(42,171,238,0.35); transform: translateY(0);"
-          onmousedown="this.style.transform='translateY(3px)';this.style.boxShadow='0 1px 0 #1A8BC4, 0 2px 6px rgba(42,171,238,0.25)'"
-          onmouseup="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 0 #1A8BC4, 0 6px 12px rgba(42,171,238,0.35)'"
-          onmouseleave="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 0 #1A8BC4, 0 6px 12px rgba(42,171,238,0.35)'"
+          class="btn-3d inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-white text-sm font-semibold transition-all duration-150 select-none"
+          style="--btn-bg:#2AABEE;--btn-shadow:0 4px 0 #1A8BC4, 0 6px 12px rgba(42,171,238,0.35);--btn-shadow-active:0 1px 0 #1A8BC4, 0 2px 6px rgba(42,171,238,0.25)"
         >
           <TelegramIcon class="h-5 w-5 shrink-0" />
           Телеграм
         </a>
       </div>
     </div>
+
+    <style>
+      /* «3D»-кнопка: цвет фона и теней задаются переменными на самом элементе. */
+      .btn-3d {
+        background: var(--btn-bg);
+        box-shadow: var(--btn-shadow);
+        transform: translateY(0);
+      }
+      .btn-3d:active {
+        transform: translateY(3px);
+        box-shadow: var(--btn-shadow-active);
+      }
+    </style>
   </body>
 </html>
