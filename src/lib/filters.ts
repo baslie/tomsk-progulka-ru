@@ -89,14 +89,14 @@ export function readFiltersFromSearch(search: string): FilterState {
   };
 }
 
+// Сериализует ТОЛЬКО фильтры (без view) — чистая функция, не читает window.
+// Параметр view добавляет вызывающий код (см. RoutesCatalog.syncUrl).
 export function writeFiltersToSearch(f: FilterState): string {
   const sp = new URLSearchParams();
   if (f.q.trim()) sp.set("q", f.q.trim());
   if (f.distance) sp.set("distance", f.distance);
   if (f.season) sp.set("season", f.season);
   for (const d of f.difficulty) sp.append("difficulty", d);
-  const view = readView(window.location.search);
-  if (view === "map") sp.set("view", "map");
   return sp.toString();
 }
 

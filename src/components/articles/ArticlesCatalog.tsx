@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ARTICLE_CATEGORY_LABELS } from "@/lib/constants";
+import { replaceSearch } from "@/lib/url";
 
 export interface ArticleListItem {
   slug: string;
@@ -41,9 +42,7 @@ export function ArticlesCatalog({ articles }: { articles: ArticleListItem[] }) {
     const sp = new URLSearchParams(window.location.search);
     if (category === "all") sp.delete("category");
     else sp.set("category", category);
-    const next = sp.toString();
-    const url = next ? `${window.location.pathname}?${next}` : window.location.pathname;
-    window.history.replaceState(null, "", url);
+    replaceSearch(sp);
   }, [category, hydrated]);
 
   const filtered =

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import {
   applyFilters,
   hasActiveFilters,
@@ -108,11 +108,6 @@ describe("get*Label", () => {
 });
 
 describe("readFiltersFromSearch / writeFiltersToSearch round-trip", () => {
-  // writeFiltersToSearch сейчас читает window.location.search (чистится на Этапе 5).
-  beforeEach(() => {
-    vi.stubGlobal("window", { location: { search: "" } });
-  });
-
 
   it("читает валидные параметры и игнорирует мусор", () => {
     const f = readFiltersFromSearch("?q=лес&distance=5-10&season=winter&difficulty=easy&difficulty=hard&difficulty=bad");

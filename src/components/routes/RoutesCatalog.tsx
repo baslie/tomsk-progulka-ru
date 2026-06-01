@@ -18,6 +18,7 @@ import {
 } from "@/lib/filters";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { replaceSearch } from "@/lib/url";
 
 const RoutesMap = React.lazy(() =>
   import("@/components/maps/RoutesMap").then((m) => ({ default: m.RoutesMap }))
@@ -37,13 +38,9 @@ function pluralizeRoutes(count: number): string {
 }
 
 function syncUrl(filters: FilterState, view: "list" | "map"): void {
-  if (typeof window === "undefined") return;
   const sp = new URLSearchParams(writeFiltersToSearch(filters));
   if (view === "map") sp.set("view", "map");
-  else sp.delete("view");
-  const next = sp.toString();
-  const url = next ? `${window.location.pathname}?${next}` : window.location.pathname;
-  window.history.replaceState(null, "", url);
+  replaceSearch(sp);
 }
 
 export function RoutesCatalog({ routes }: RoutesCatalogProps) {
