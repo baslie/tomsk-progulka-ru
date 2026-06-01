@@ -52,12 +52,17 @@ const mapTracks: RouteTrack[] = data.tracks?.length
   : [{ name: data.title, gpx: data.gpx }];
 
 // Скачивание GPX: ссылки на оригинальные файлы (с высотами), где они заданы.
+// label — короткая подпись для кнопки: начало маршрута + дистанция.
 const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
-  ? data.tracks.map((t, i) =>
-      t.gpxFile
-        ? { name: t.name, href: t.gpxFile }
-        : { name: t.name, gpx: t.gpx, slug: `${route.id}-${i + 1}` }
-    )
+  ? data.tracks.map((t, i) => {
+      const origin = t.name.split(" — ")[0];
+      const label = t.distanceKm
+        ? `${origin} · ${formatDistance(t.distanceKm)}`
+        : origin;
+      return t.gpxFile
+        ? { name: t.name, label, href: t.gpxFile }
+        : { name: t.name, label, gpx: t.gpx, slug: `${route.id}-${i + 1}` };
+    })
   : undefined;
 ---
 
@@ -66,48 +71,55 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
   description={description}
   image={data.coverImage}
   type="article"
+  heroOverlay
 >
-  <article class="container py-8 md:py-12">
-    <nav class="mb-6 text-sm text-[var(--muted-foreground)]">
-      <a href="/trails" class="hover:text-[var(--foreground)]">Маршруты</a>
-      <span class="mx-2">/</span>
-      <span>{data.title}</span>
-    </nav>
+  <section class="relative flex min-h-[88vh] items-center lg:min-h-[85vh]">
+    {data.coverImageAsset ? (
+      <Image
+        src={data.coverImageAsset}
+        alt={data.title}
+        widths={[768, 1200, 1600, 1920]}
+        sizes="100vw"
+        loading="eager"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+    ) : (
+      <img
+        src={data.coverImage}
+        alt={data.title}
+        loading="eager"
+        decoding="async"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+    )}
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/30"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"></div>
 
-    <header class="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-10">
-      <div class="overflow-hidden rounded-xl bg-[var(--muted)]">
-        {data.coverImageAsset ? (
-          <Image
-            src={data.coverImageAsset}
-            alt={data.title}
-            widths={[480, 800, 1200, 1600]}
-            sizes="(min-width: 1024px) 60vw, 100vw"
-            loading="eager"
-            class="h-full w-full object-cover"
-          />
-        ) : (
-          <img
-            src={data.coverImage}
-            alt={data.title}
-            loading="eager"
-            decoding="async"
-            class="h-full w-full object-cover"
-          />
-        )}
-      </div>
-
-      <div class="flex flex-col justify-center gap-5">
+    <div class="container relative z-10 pb-12 pt-28 md:pt-32">
+      <div class="max-w-2xl text-white">
         <div class="flex flex-wrap gap-2">
           <Badge variant={difficultyVariant[data.difficulty]}>
             {DIFFICULTY_LABELS[data.difficulty]}
           </Badge>
-          <Badge variant="outline">{SEASON_LABELS[data.season]}</Badge>
-          <Badge variant="outline">{data.region}</Badge>
+          <Badge
+            variant="outline"
+            className="border-white/50 bg-white/10 text-white backdrop-blur-sm"
+          >
+            {SEASON_LABELS[data.season]}
+          </Badge>
+          <Badge
+            variant="outline"
+            className="border-white/50 bg-white/10 text-white backdrop-blur-sm"
+          >
+            {data.region}
+          </Badge>
         </div>
 
-        <h1 class="text-3xl font-bold tracking-tight md:text-4xl">{data.title}</h1>
+        <h1 class="mt-4 text-4xl font-bold tracking-tight drop-shadow-sm md:text-5xl">
+          {data.title}
+        </h1>
 
-        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[var(--muted-foreground)]">
+        <div class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-white/80">
           {data.author?.avatar && (
             <img
               src={data.author.avatar}
@@ -117,45 +129,69 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
             />
           )}
           {data.author && (
-            <span class="font-medium text-[var(--foreground)]">{data.author.name}</span>
+            <span class="font-medium text-white">{data.author.name}</span>
           )}
-          {data.author?.isOrganizer && <span class="text-[var(--primary)]">· Организатор</span>}
+          {data.author?.isOrganizer && <span>· Организатор</span>}
           <span>· Опубликовано {formatDateRu(data.publishedAt)}</span>
         </div>
 
-        <dl class="grid grid-cols-2 gap-4 text-sm">
+        <dl class="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-sm">
           <div>
-            <dt class="text-[var(--muted-foreground)]">Расстояние</dt>
+            <dt class="text-white/70">Расстояние</dt>
             <dd class="font-semibold">{formatDistance(data.distanceKm)}</dd>
           </div>
           <div>
-            <dt class="text-[var(--muted-foreground)]">Длительность</dt>
+            <dt class="text-white/70">Длительность</dt>
             <dd class="font-semibold">{formatDuration(data.durationMin)}</dd>
           </div>
           <div>
-            <dt class="text-[var(--muted-foreground)]">Сложность</dt>
+            <dt class="text-white/70">Сложность</dt>
             <dd class="font-semibold">{DIFFICULTY_LABELS[data.difficulty]}</dd>
-          </div>
-          <div>
-            <dt class="text-[var(--muted-foreground)]">Сезон</dt>
-            <dd class="font-semibold">{SEASON_LABELS[data.season]}</dd>
           </div>
         </dl>
 
-        <div class="flex gap-2">
-          {gpxVariants ? (
-            <GpxDownloadButton variants={gpxVariants} client:load />
-          ) : (
-            <GpxDownloadButton
-              gpx={data.gpx}
-              slug={route.id}
-              name={data.title}
-              client:load
-            />
-          )}
+        <div class="mt-7">
+          <p class="mb-2 text-sm font-medium text-white/80">Скачать трек (GPX):</p>
+          <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            {gpxVariants ? (
+              <GpxDownloadButton variants={gpxVariants} inline client:load />
+            ) : (
+              <GpxDownloadButton
+                gpx={data.gpx}
+                slug={route.id}
+                name={data.title}
+                client:load
+              />
+            )}
+            <a
+              href="#route-map"
+              class="inline-flex h-9 items-center justify-center gap-2 rounded-md border border-white/40 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              Смотреть маршрут на карте
+            </a>
+          </div>
         </div>
       </div>
-    </header>
+    </div>
+  </section>
+
+  <article class="container py-8 md:py-12">
+    <nav class="mb-6 text-sm text-[var(--muted-foreground)]">
+      <a href="/trails" class="hover:text-[var(--foreground)]">Маршруты</a>
+      <span class="mx-2">/</span>
+      <span>{data.title}</span>
+    </nav>
+
+    <section id="route-map" class="mx-auto max-w-5xl scroll-mt-24">
+      <h2 class="mb-4 text-2xl font-semibold">Маршрут на карте</h2>
+      <div class="h-[480px] overflow-hidden rounded-xl border border-[var(--border)]">
+        <RouteMap tracks={mapTracks} client:only="react" />
+      </div>
+    </section>
 
     <div id="route-content" class="route-prose prose prose-neutral mt-10 max-w-none">
       <Content />
@@ -197,13 +233,6 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
         )}
       </div>
     )}
-
-    <section id="route-map" class="mx-auto mt-10 max-w-5xl scroll-mt-24">
-      <h2 class="mb-4 text-2xl font-semibold">Маршрут на карте</h2>
-      <div class="h-[480px] overflow-hidden rounded-xl border border-[var(--border)]">
-        <RouteMap tracks={mapTracks} client:only="react" />
-      </div>
-    </section>
 
     {data.howToGetCustomText && (
       <section class="mx-auto mt-10 max-w-3xl">

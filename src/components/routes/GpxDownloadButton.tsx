@@ -4,8 +4,8 @@ import { downloadGpx } from "@/lib/gpx";
 import type { GeoJsonLineString } from "@/lib/gpx";
 
 export type GpxVariant =
-  | { name: string; gpx: GeoJsonLineString; slug: string }
-  | { name: string; href: string };
+  | { name: string; label?: string; gpx: GeoJsonLineString; slug: string }
+  | { name: string; label?: string; href: string };
 
 interface Props {
   // Одиночный режим (обратная совместимость).
@@ -14,6 +14,8 @@ interface Props {
   name?: string;
   // Несколько вариантов для скачивания.
   variants?: GpxVariant[];
+  // Inline-режим: каждый вариант — отдельная кнопка (без выпадающего меню).
+  inline?: boolean;
 }
 
 function DownloadIcon() {
@@ -39,7 +41,7 @@ function triggerVariant(v: GpxVariant) {
   }
 }
 
-export function GpxDownloadButton({ gpx, slug, name, variants }: Props) {
+export function GpxDownloadButton({ gpx, slug, name, variants, inline }: Props) {
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement | null>(null);
 
@@ -51,6 +53,25 @@ export function GpxDownloadButton({ gpx, slug, name, variants }: Props) {
     document.addEventListener("mousedown", onClick);
     return () => document.removeEventListener("mousedown", onClick);
   }, [open]);
+
+  // Inline-режим → отдельная кнопка на каждый вариант (без меню).
+  if (inline && variants && variants.length > 0) {
+    return (
+      <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+        {variants.map((v) => (
+          <Button
+            key={v.name}
+            variant="default"
+            onClick={() => triggerVariant(v)}
+            className="gap-2"
+          >
+            <DownloadIcon />
+            {v.label ?? v.name}
+          </Button>
+        ))}
+      </div>
+    );
+  }
 
   // Несколько вариантов → выпадающее меню.
   if (variants && variants.length > 1) {
