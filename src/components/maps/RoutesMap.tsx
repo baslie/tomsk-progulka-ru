@@ -91,7 +91,7 @@ export function RoutesMap({ routes }: { routes: MapRoute[] }) {
             ${formatDistance(route.distanceKm)} · ${formatDuration(route.durationMin)}<br/>
             ${escapeXml(route.region)}
           </div>
-          <a class="popup-link" href="/routes/${route.slug}/">Смотреть маршрут</a>
+          <a class="popup-link" href="/trails/${route.slug}/">Смотреть маршрут</a>
         </div>`;
       polyline.bindPopup(popupHtml);
 

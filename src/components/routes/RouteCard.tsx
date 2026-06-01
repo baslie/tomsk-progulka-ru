@@ -25,7 +25,7 @@ export interface RouteCardData {
 export function RouteCard({ route }: { route: RouteCardData }) {
   return (
     <a
-      href={`/routes/${route.slug}/`}
+      href={`/trails/${route.slug}/`}
       className="group flex flex-col overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card)] shadow-sm transition-all hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2"
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-[var(--muted)]">

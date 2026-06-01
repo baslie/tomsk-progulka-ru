@@ -1,80 +1,91 @@
 ---
-import "@fontsource-variable/inter";
-import "@/styles/globals.css";
-import YandexMetrika from "@/components/analytics/YandexMetrika.astro";
-import VkIcon from "@/components/icons/VkIcon.astro";
-import TelegramIcon from "@/components/icons/TelegramIcon.astro";
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { RoutesCatalog } from "@/components/routes/RoutesCatalog";
+
+const all = await getCollection("routes");
+const routes = all
+  .map((entry) => ({
+    slug: entry.id,
+    title: entry.data.title,
+    description: entry.data.description,
+    difficulty: entry.data.difficulty,
+    season: entry.data.season,
+    distanceKm: entry.data.distanceKm,
+    durationMin: entry.data.durationMin,
+    region: entry.data.region,
+    coverImage: entry.data.coverImage,
+    authorName: entry.data.author?.name,
+    isOrganizer: entry.data.author?.isOrganizer ?? false,
+    gpx: entry.data.gpx,
+    publishedAt: entry.data.publishedAt,
+  }))
+  .sort((a, b) => +new Date(b.publishedAt) - +new Date(a.publishedAt));
 ---
 
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="p:domain_verify" content="b791ec9276857eddc8fa55257606340b" />
-    <title>Томская Прогулка</title>
-    <meta
-      name="description"
-      content="Походы и прогулки по Томску и Томской области с 2016 года"
+<BaseLayout
+  title="Пешие маршруты по Томску и области"
+  description="Каталог пешеходных маршрутов по Томску и Томской области с GPX-треками, фотографиями и подробными описаниями."
+  heroOverlay={true}
+>
+  <section
+    class="relative w-full h-[58vh] md:h-[68vh] min-h-[460px] overflow-hidden"
+  >
+    <img
+      src="/images/hero/cover.jpg"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover"
     />
-    <meta property="og:title" content="Томская Прогулка" />
-    <meta
-      property="og:description"
-      content="Походы и прогулки по Томску и Томской области с 2016 года"
-    />
-    <meta property="og:type" content="website" />
-    <YandexMetrika />
-  </head>
-  <body class="min-h-screen flex items-center justify-center bg-white">
-    <div class="flex flex-col items-center gap-8 px-6 max-w-xl text-center">
-      <img
-        src="/logo.svg"
-        alt="Томская Прогулка"
-        class="w-72 sm:w-88 md:w-96 h-auto"
-      />
-
-      <p class="text-[#0A0A0A]/70 text-base sm:text-lg leading-relaxed">
-        Ходим в небольшие однодневные походы-прогулки в окрестностях Томска,
-        Северска (и не только) по выходным. Присоединяйтесь 🙌🏻
-      </p>
-
-      <div class="flex items-center gap-4">
-        <a
-          href="https://vk.com/tomsk_progulka"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn-3d inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-white text-sm font-semibold transition-all duration-150 select-none"
-          style="--btn-bg:#0077FF;--btn-shadow:0 4px 0 #0057CC, 0 6px 12px rgba(0,119,255,0.35);--btn-shadow-active:0 1px 0 #0057CC, 0 2px 6px rgba(0,119,255,0.25)"
-        >
-          <VkIcon class="h-5 w-5 shrink-0" />
-          ВКонтакте
-        </a>
-
-        <a
-          href="https://t.me/tomsk_progulka"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn-3d inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-white text-sm font-semibold transition-all duration-150 select-none"
-          style="--btn-bg:#2AABEE;--btn-shadow:0 4px 0 #1A8BC4, 0 6px 12px rgba(42,171,238,0.35);--btn-shadow-active:0 1px 0 #1A8BC4, 0 2px 6px rgba(42,171,238,0.25)"
-        >
-          <TelegramIcon class="h-5 w-5 shrink-0" />
-          Телеграм
-        </a>
-      </div>
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/45 to-black/70"
+    >
     </div>
 
-    <style>
-      /* «3D»-кнопка: цвет фона и теней задаются переменными на самом элементе. */
-      .btn-3d {
-        background: var(--btn-bg);
-        box-shadow: var(--btn-shadow);
-        transform: translateY(0);
-      }
-      .btn-3d:active {
-        transform: translateY(3px);
-        box-shadow: var(--btn-shadow-active);
-      }
-    </style>
-  </body>
-</html>
+    <div class="relative z-10 h-full flex items-center justify-center">
+      <div
+        class="container max-w-3xl flex flex-col items-center text-center space-y-6"
+      >
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 backdrop-blur px-3 py-1 text-xs uppercase tracking-wider text-white"
+        >
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-white"></span>
+          Водим походы с&nbsp;2016&nbsp;года
+        </span>
+
+        <h1
+          class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.05] drop-shadow-md"
+        >
+          Пешие маршруты по&nbsp;Томску и&nbsp;области
+        </h1>
+
+        <p class="text-base md:text-lg text-white/85 max-w-xl">
+          Ходим в&nbsp;небольшие однодневные походы-прогулки в&nbsp;окрестностях
+          Томска, Северска (и&nbsp;не&nbsp;только) по&nbsp;выходным.
+          Присоединяйтесь&nbsp;🙌🏻
+        </p>
+
+        <div
+          class="flex flex-row items-stretch justify-center gap-2 sm:gap-3 pt-2 w-full"
+        >
+          <a
+            href="#catalog"
+            class="flex-1 sm:flex-none px-3 sm:px-6 py-3 bg-white text-[var(--foreground)] rounded-md hover:bg-[var(--secondary)] transition-colors text-sm font-semibold text-center whitespace-nowrap"
+          >
+            Смотреть маршруты
+          </a>
+          <a
+            href="/about"
+            class="flex-1 sm:flex-none px-3 sm:px-6 py-3 border border-white/60 text-white rounded-md hover:bg-white/10 transition-colors text-sm font-medium text-center whitespace-nowrap"
+          >
+            О&nbsp;проекте →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalog" class="container py-8 md:py-12 scroll-mt-16">
+    <RoutesCatalog routes={routes} client:load />
+  </section>
+</BaseLayout>

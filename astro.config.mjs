@@ -7,6 +7,9 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://tomsk-progulka.ru",
+  redirects: {
+    "/trails": "/",
+  },
   integrations: [react(), mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
