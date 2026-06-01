@@ -4,19 +4,13 @@ title: Контакты
 
 ## Свяжитесь с нами
 
-Мы всегда рады обратной связи и предложениям!
-
-### Электронная почта
-
-info@tomsk-progulka.ru
+Мы всегда рады обратной связи и&nbsp;предложениям!
 
 ### Социальные сети
 
-- ВКонтакте: vk.com/tomskaya_progulka
-- Telegram: @tomskaya_progulka
+- ВКонтакте: [vk.com/tomsk_progulka](https://vk.com/tomsk_progulka)
+- Telegram: [t.me/tomsk_progulka](https://t.me/tomsk_progulka)
 
 ### Адрес
 
-г. Томск, ул. Ленина, 1
-
-Режим работы: Пн-Пт, 9:00-18:00
+Россия, г.&nbsp;Томск
