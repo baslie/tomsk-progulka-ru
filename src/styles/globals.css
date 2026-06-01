@@ -60,6 +60,9 @@
   }
   html {
     scroll-behavior: smooth;
+    /* Отступ под фиксированную шапку (h-16 = 64px) при якорных переходах
+       — одинаков на всех брейкпоинтах, т.к. высота шапки не меняется. */
+    scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
   }
   body {
