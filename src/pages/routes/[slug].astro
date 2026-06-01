@@ -11,6 +11,7 @@ import {
 import { LightboxRoot } from "@/components/media/LightboxRoot";
 import {
   DIFFICULTY_LABELS,
+  DIFFICULTY_BADGE_VARIANT,
   SEASON_LABELS,
   formatDistance,
   formatDuration,
@@ -32,15 +33,6 @@ interface Props {
 const { route } = Astro.props;
 const { Content } = await render(route);
 const data = route.data;
-
-const difficultyVariant: Record<
-  keyof typeof DIFFICULTY_LABELS,
-  "success" | "warning" | "danger"
-> = {
-  easy: "success",
-  medium: "warning",
-  hard: "danger",
-};
 
 const description = data.description.length > 160
   ? data.description.slice(0, 157) + "…"
@@ -100,7 +92,7 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
         <!-- Левая колонка: текст и кнопка «Подробнее» -->
         <div class="max-w-2xl text-white">
           <div class="flex flex-wrap gap-2">
-            <Badge variant={difficultyVariant[data.difficulty]}>
+            <Badge variant={DIFFICULTY_BADGE_VARIANT[data.difficulty]}>
               {DIFFICULTY_LABELS[data.difficulty]}
             </Badge>
             <Badge

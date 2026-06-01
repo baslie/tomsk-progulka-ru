@@ -2,6 +2,7 @@ import * as React from "react";
 import { Badge } from "@/components/ui/Badge";
 import {
   DIFFICULTY_LABELS,
+  DIFFICULTY_BADGE_VARIANT,
   SEASON_LABELS,
   formatDistance,
   formatDuration,
@@ -21,15 +22,6 @@ export interface RouteCardData {
   isOrganizer?: boolean;
 }
 
-const difficultyVariant: Record<
-  keyof typeof DIFFICULTY_LABELS,
-  "success" | "warning" | "danger"
-> = {
-  easy: "success",
-  medium: "warning",
-  hard: "danger",
-};
-
 export function RouteCard({ route }: { route: RouteCardData }) {
   return (
     <a
@@ -45,7 +37,7 @@ export function RouteCard({ route }: { route: RouteCardData }) {
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute top-3 left-3 flex gap-1.5">
-          <Badge variant={difficultyVariant[route.difficulty]}>
+          <Badge variant={DIFFICULTY_BADGE_VARIANT[route.difficulty]}>
             {DIFFICULTY_LABELS[route.difficulty]}
           </Badge>
           <Badge variant="outline" className="bg-white/90 backdrop-blur">

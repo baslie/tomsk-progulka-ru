@@ -1,3 +1,5 @@
+import { DIFFICULTY_LABELS, SEASON_LABELS } from "@/lib/constants";
+
 export const DISTANCE_RANGES = [
   { value: "0-5", label: "До 5 км", min: 0, max: 5 },
   { value: "5-10", label: "5–10 км", min: 5, max: 10 },
@@ -5,23 +7,24 @@ export const DISTANCE_RANGES = [
   { value: "20+", label: "Более 20 км", min: 20, max: Infinity },
 ] as const;
 
-export const DIFFICULTY_OPTIONS = [
-  { value: "easy", label: "Лёгкий" },
-  { value: "medium", label: "Средний" },
-  { value: "hard", label: "Сложный" },
-] as const;
+// Порядок элементов в UI-селекторах фиксируется здесь; подписи берутся из
+// единого источника в constants.ts (без дублирования строк).
+const DIFFICULTY_ORDER = ["easy", "medium", "hard"] as const;
+const SEASON_ORDER = ["all_year", "spring", "summer", "autumn", "winter"] as const;
 
-export const SEASON_OPTIONS = [
-  { value: "all_year", label: "Круглый год" },
-  { value: "spring", label: "Весна" },
-  { value: "summer", label: "Лето" },
-  { value: "autumn", label: "Осень" },
-  { value: "winter", label: "Зима" },
-] as const;
+export const DIFFICULTY_OPTIONS = DIFFICULTY_ORDER.map((value) => ({
+  value,
+  label: DIFFICULTY_LABELS[value],
+}));
+
+export const SEASON_OPTIONS = SEASON_ORDER.map((value) => ({
+  value,
+  label: SEASON_LABELS[value],
+}));
 
 export type DistanceRange = (typeof DISTANCE_RANGES)[number]["value"];
-export type DifficultyValue = (typeof DIFFICULTY_OPTIONS)[number]["value"];
-export type SeasonValue = (typeof SEASON_OPTIONS)[number]["value"];
+export type DifficultyValue = (typeof DIFFICULTY_ORDER)[number];
+export type SeasonValue = (typeof SEASON_ORDER)[number];
 
 export type FilterState = {
   q: string;

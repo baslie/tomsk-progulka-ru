@@ -18,6 +18,13 @@ export const DIFFICULTY_COLORS = {
   hard: "bg-red-100 text-red-800",
 } as const;
 
+/** Вариант бейджа для каждой сложности (единый источник для карточки и страницы маршрута). */
+export const DIFFICULTY_BADGE_VARIANT = {
+  easy: "success",
+  medium: "warning",
+  hard: "danger",
+} as const satisfies Record<keyof typeof DIFFICULTY_LABELS, string>;
+
 export const SEASON_LABELS = {
   spring: "Весна",
   summer: "Лето",
