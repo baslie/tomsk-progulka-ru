@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ARTICLE_CATEGORY_LABELS } from "@/lib/constants";
 import { replaceSearch } from "@/lib/url";
+import { cn } from "@/lib/cn";
 
 export interface ArticleListItem {
   slug: string;
@@ -59,12 +60,12 @@ export function ArticlesCatalog({ articles }: { articles: ArticleListItem[] }) {
               type="button"
               onClick={() => setCategory(c.value)}
               aria-pressed={active}
-              className={
-                "inline-flex h-9 items-center rounded-full border px-4 text-sm transition-colors " +
-                (active
+              className={cn(
+                "inline-flex h-9 items-center rounded-full border px-4 text-sm transition-colors",
+                active
                   ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
-                  : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:bg-[var(--muted)]")
-              }
+                  : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:bg-[var(--muted)]"
+              )}
             >
               {c.label}
             </button>

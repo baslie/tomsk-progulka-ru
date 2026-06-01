@@ -19,6 +19,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { replaceSearch } from "@/lib/url";
+import { cn } from "@/lib/cn";
 
 const RoutesMap = React.lazy(() =>
   import("@/components/maps/RoutesMap").then((m) => ({ default: m.RoutesMap }))
@@ -156,12 +157,12 @@ export function RoutesCatalog({ routes }: RoutesCatalogProps) {
                   type="button"
                   onClick={() => toggleDifficulty(d.value)}
                   aria-pressed={checked}
-                  className={
-                    "inline-flex h-10 flex-1 items-center justify-center rounded-md border px-3 text-sm transition-colors lg:flex-none " +
-                    (checked
+                  className={cn(
+                    "inline-flex h-10 flex-1 items-center justify-center rounded-md border px-3 text-sm transition-colors lg:flex-none",
+                    checked
                       ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
-                      : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:bg-[var(--muted)]")
-                  }
+                      : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:bg-[var(--muted)]"
+                  )}
                 >
                   {d.label}
                 </button>
@@ -242,12 +243,12 @@ export function RoutesCatalog({ routes }: RoutesCatalogProps) {
           <button
             type="button"
             onClick={() => setView("list")}
-            className={
-              "inline-flex h-8 items-center gap-1.5 rounded-sm px-3 transition-colors " +
-              (view === "list"
+            className={cn(
+              "inline-flex h-8 items-center gap-1.5 rounded-sm px-3 transition-colors",
+              view === "list"
                 ? "bg-[var(--muted)] text-[var(--foreground)]"
-                : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]")
-            }
+                : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+            )}
             aria-pressed={view === "list"}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -263,12 +264,12 @@ export function RoutesCatalog({ routes }: RoutesCatalogProps) {
           <button
             type="button"
             onClick={() => setView("map")}
-            className={
-              "inline-flex h-8 items-center gap-1.5 rounded-sm px-3 transition-colors " +
-              (view === "map"
+            className={cn(
+              "inline-flex h-8 items-center gap-1.5 rounded-sm px-3 transition-colors",
+              view === "map"
                 ? "bg-[var(--muted)] text-[var(--foreground)]"
-                : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]")
-            }
+                : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+            )}
             aria-pressed={view === "map"}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
