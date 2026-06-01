@@ -10,6 +10,9 @@ export const MAP_FIT_PADDING: [number, number] = [24, 24];
 
 /** Подложка OpenStreetMap с едиными настройками. */
 export function addOsmTileLayer(map: L.Map): void {
+  // Убираем саморекламный префикс Leaflet («🇺🇦 Leaflet»), оставляя только
+  // обязательную по лицензии атрибуцию данных «© OpenStreetMap».
+  map.attributionControl.setPrefix(false);
   L.tileLayer(OSM_TILE_URL, {
     attribution: OSM_ATTRIBUTION,
     maxZoom: 19,
