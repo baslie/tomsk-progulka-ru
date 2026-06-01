@@ -1,5 +1,7 @@
 import * as React from "react";
-import { Button } from "@/components/ui/Button";
+import type { VariantProps } from "class-variance-authority";
+import { Button, buttonVariants } from "@/components/ui/Button";
+import { cn } from "@/lib/cn";
 import { downloadGpx } from "@/lib/gpx";
 import type { GeoJsonLineString } from "@/lib/gpx";
 
@@ -16,6 +18,10 @@ interface Props {
   variants?: GpxVariant[];
   // Inline-режим: каждый вариант — отдельная кнопка (без выпадающего меню).
   inline?: boolean;
+  // Стиль inline-кнопок.
+  buttonVariant?: VariantProps<typeof buttonVariants>["variant"];
+  buttonSize?: VariantProps<typeof buttonVariants>["size"];
+  buttonClassName?: string;
 }
 
 function DownloadIcon() {
@@ -41,7 +47,16 @@ function triggerVariant(v: GpxVariant) {
   }
 }
 
-export function GpxDownloadButton({ gpx, slug, name, variants, inline }: Props) {
+export function GpxDownloadButton({
+  gpx,
+  slug,
+  name,
+  variants,
+  inline,
+  buttonVariant,
+  buttonSize,
+  buttonClassName,
+}: Props) {
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement | null>(null);
 
@@ -57,13 +72,14 @@ export function GpxDownloadButton({ gpx, slug, name, variants, inline }: Props) 
   // Inline-режим → отдельная кнопка на каждый вариант (без меню).
   if (inline && variants && variants.length > 0) {
     return (
-      <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+      <div className="flex flex-wrap gap-2">
         {variants.map((v) => (
           <Button
             key={v.name}
-            variant="default"
+            variant={buttonVariant ?? "default"}
+            size={buttonSize}
             onClick={() => triggerVariant(v)}
-            className="gap-2"
+            className={cn("gap-2", buttonClassName)}
           >
             <DownloadIcon />
             {v.label ?? v.name}
