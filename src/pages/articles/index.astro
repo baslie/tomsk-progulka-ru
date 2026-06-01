@@ -2,6 +2,13 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { ArticlesCatalog } from "@/components/articles/ArticlesCatalog";
+import { ARTICLES_VISIBLE } from "@/lib/constants";
+
+// Раздел «Статьи» временно скрыт: уводим посетителей на главную, не показывая
+// список. Код и контент сохранены. См. CLAUDE.md, «Скрытый раздел „Статьи“».
+if (!ARTICLES_VISIBLE) {
+  return Astro.redirect("/");
+}
 
 const all = await getCollection("articles");
 const articles = all

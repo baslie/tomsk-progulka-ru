@@ -1,6 +1,7 @@
 ---
 import VkIcon from "@/components/icons/VkIcon.astro";
 import TelegramIcon from "@/components/icons/TelegramIcon.astro";
+import { ARTICLES_VISIBLE } from "@/lib/constants";
 
 interface Props {
   transparentOnTop?: boolean;
@@ -8,9 +9,13 @@ interface Props {
 
 const { transparentOnTop = false } = Astro.props;
 
+// Пункт «Статьи» появляется в меню только при ARTICLES_VISIBLE === true.
+// Раздел временно скрыт — см. CLAUDE.md, «Скрытый раздел „Статьи“».
 const navLinks = [
   { href: "/", label: "Маршруты" },
-  { href: "/articles", label: "Статьи" },
+  ...(ARTICLES_VISIBLE
+    ? [{ href: "/articles", label: "Статьи" }]
+    : []),
   { href: "/about", label: "О проекте" },
   { href: "/contacts", label: "Контакты" },
 ] as const;

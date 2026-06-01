@@ -10,7 +10,13 @@ export default defineConfig({
   redirects: {
     "/trails": "/",
   },
-  integrations: [react(), mdx(), sitemap()],
+  integrations: [
+    react(),
+    mdx(),
+    // Раздел «Статьи» временно скрыт: исключаем /articles (и возможные
+    // страницы статей) из карты сайта. См. CLAUDE.md, «Скрытый раздел „Статьи“».
+    sitemap({ filter: (page) => !page.includes("/articles") }),
+  ],
   vite: {
     plugins: [tailwindcss()],
     resolve: {
