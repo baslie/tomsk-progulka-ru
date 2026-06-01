@@ -12,7 +12,10 @@ interface Props {
 }
 
 const { image, alt, caption, loading = "lazy", full = false } = Astro.props;
-const img = await buildLightboxImage(image, { thumbWidth: 1400, fullWidth: 2000 });
+const img = await buildLightboxImage(image, {
+  thumbWidth: 1400,
+  fullWidth: 2000,
+});
 ---
 
 <figure class={`not-prose my-6 ${full ? "" : ""}`}>
@@ -36,9 +39,11 @@ const img = await buildLightboxImage(image, { thumbWidth: 1400, fullWidth: 2000 
       class="h-auto w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
     />
   </a>
-  {caption && (
-    <figcaption class="mt-2 text-center text-sm text-[var(--muted-foreground)]">
-      {caption}
-    </figcaption>
-  )}
+  {
+    caption && (
+      <figcaption class="mt-2 text-center text-sm text-[var(--muted-foreground)]">
+        {caption}
+      </figcaption>
+    )
+  }
 </figure>

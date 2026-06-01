@@ -34,9 +34,10 @@ const { route } = Astro.props;
 const { Content } = await render(route);
 const data = route.data;
 
-const description = data.description.length > 160
-  ? data.description.slice(0, 157) + "…"
-  : data.description;
+const description =
+  data.description.length > 160
+    ? data.description.slice(0, 157) + "…"
+    : data.description;
 
 // Карта: показываем все варианты, если заданы; иначе — одиночный трек.
 const mapTracks: RouteTrack[] = data.tracks?.length
@@ -66,26 +67,34 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
   heroOverlay
 >
   <section class="relative">
-    {data.coverImageAsset ? (
-      <Image
-        src={data.coverImageAsset}
-        alt={data.title}
-        widths={[768, 1200, 1600, 1920]}
-        sizes="100vw"
-        loading="eager"
-        class="absolute inset-0 h-full w-full object-cover"
-      />
-    ) : (
-      <img
-        src={data.coverImage}
-        alt={data.title}
-        loading="eager"
-        decoding="async"
-        class="absolute inset-0 h-full w-full object-cover"
-      />
-    )}
-    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/30"></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"></div>
+    {
+      data.coverImageAsset ? (
+        <Image
+          src={data.coverImageAsset}
+          alt={data.title}
+          widths={[768, 1200, 1600, 1920]}
+          sizes="100vw"
+          loading="eager"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <img
+          src={data.coverImage}
+          alt={data.title}
+          loading="eager"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+      )
+    }
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/30"
+    >
+    </div>
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"
+    >
+    </div>
 
     <div class="container relative z-10 pb-12 pt-28 md:pb-16 md:pt-32">
       <div class="grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
@@ -109,22 +118,30 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
             </Badge>
           </div>
 
-          <h1 class="mt-4 text-4xl font-bold tracking-tight drop-shadow-sm md:text-5xl">
+          <h1
+            class="mt-4 text-4xl font-bold tracking-tight drop-shadow-sm md:text-5xl"
+          >
             {data.title}
           </h1>
 
-          <div class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-white/80">
-            {data.author?.avatar && (
-              <img
-                src={data.author.avatar}
-                alt={data.author.name}
-                class="size-6 rounded-full object-cover"
-                loading="lazy"
-              />
-            )}
-            {data.author && (
-              <span class="font-medium text-white">{data.author.name}</span>
-            )}
+          <div
+            class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-white/80"
+          >
+            {
+              data.author?.avatar && (
+                <img
+                  src={data.author.avatar}
+                  alt={data.author.name}
+                  class="size-6 rounded-full object-cover"
+                  loading="lazy"
+                />
+              )
+            }
+            {
+              data.author && (
+                <span class="font-medium text-white">{data.author.name}</span>
+              )
+            }
             {data.author?.isOrganizer && <span>· Организатор</span>}
             <span>· Опубликовано {formatDateRu(data.publishedAt)}</span>
           </div>
@@ -140,7 +157,9 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
             </div>
             <div>
               <dt class="text-white/70">Сложность</dt>
-              <dd class="font-semibold">{DIFFICULTY_LABELS[data.difficulty]}</dd>
+              <dd class="font-semibold">
+                {DIFFICULTY_LABELS[data.difficulty]}
+              </dd>
             </div>
           </dl>
 
@@ -162,25 +181,34 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
           </div>
           <div>
             <p class="mb-2 text-xs font-medium text-white/80">Скачать GPX:</p>
-            {gpxVariants ? (
-              <GpxDownloadButton
-                variants={gpxVariants}
-                inline
-                buttonVariant="outline"
-                buttonSize="sm"
-                buttonClassName="border-white/40 bg-transparent text-white hover:bg-white/10"
-                client:load
-              />
-            ) : (
-              <GpxDownloadButton
-                variants={[{ name: data.title, label: "Скачать GPX", gpx: data.gpx, slug: route.id }]}
-                inline
-                buttonVariant="outline"
-                buttonSize="sm"
-                buttonClassName="border-white/40 bg-transparent text-white hover:bg-white/10"
-                client:load
-              />
-            )}
+            {
+              gpxVariants ? (
+                <GpxDownloadButton
+                  variants={gpxVariants}
+                  inline
+                  buttonVariant="outline"
+                  buttonSize="sm"
+                  buttonClassName="border-white/40 bg-transparent text-white hover:bg-white/10"
+                  client:load
+                />
+              ) : (
+                <GpxDownloadButton
+                  variants={[
+                    {
+                      name: data.title,
+                      label: "Скачать GPX",
+                      gpx: data.gpx,
+                      slug: route.id,
+                    },
+                  ]}
+                  inline
+                  buttonVariant="outline"
+                  buttonSize="sm"
+                  buttonClassName="border-white/40 bg-transparent text-white hover:bg-white/10"
+                  client:load
+                />
+              )
+            }
           </div>
         </div>
       </div>
@@ -188,7 +216,10 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
   </section>
 
   <article class="container py-8 md:py-12">
-    <nav id="route-details" class="mx-auto mb-6 max-w-3xl text-sm text-[var(--muted-foreground)]">
+    <nav
+      id="route-details"
+      class="mx-auto mb-6 max-w-3xl text-sm text-[var(--muted-foreground)]"
+    >
       <a href="/trails" class="hover:text-[var(--foreground)]">Маршруты</a>
       <span class="mx-2">/</span>
       <span>{data.title}</span>
@@ -198,60 +229,70 @@ const gpxVariants: GpxVariant[] | undefined = data.tracks?.length
       <Content />
     </div>
 
-    {data.author && (data.author.bio || data.author.vkUrl) && (
-      <div class="mx-auto mt-10 max-w-3xl rounded-xl border border-[var(--border)] bg-[var(--card)] p-5">
-        <div class="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
-          Автор маршрута
-        </div>
-        <div class="mt-2 flex items-center gap-3">
-          {data.author.avatar && (
-            <img
-              src={data.author.avatar}
-              alt={data.author.name}
-              class="size-10 rounded-full object-cover"
-              loading="lazy"
-            />
-          )}
-          <div>
-            <div class="font-semibold">{data.author.name}</div>
-            {data.author.isOrganizer && (
-              <div class="text-xs text-[var(--primary)]">Организатор Томской Прогулки</div>
-            )}
+    {
+      data.author && (data.author.bio || data.author.vkUrl) && (
+        <div class="mx-auto mt-10 max-w-3xl rounded-xl border border-[var(--border)] bg-[var(--card)] p-5">
+          <div class="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+            Автор маршрута
           </div>
+          <div class="mt-2 flex items-center gap-3">
+            {data.author.avatar && (
+              <img
+                src={data.author.avatar}
+                alt={data.author.name}
+                class="size-10 rounded-full object-cover"
+                loading="lazy"
+              />
+            )}
+            <div>
+              <div class="font-semibold">{data.author.name}</div>
+              {data.author.isOrganizer && (
+                <div class="text-xs text-[var(--primary)]">
+                  Организатор Томской Прогулки
+                </div>
+              )}
+            </div>
+          </div>
+          {data.author.bio && (
+            <p class="mt-3 text-sm text-[var(--muted-foreground)]">
+              {data.author.bio}
+            </p>
+          )}
+          {data.author.vkUrl && (
+            <a
+              href={data.author.vkUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-3 inline-flex items-center gap-1.5 text-sm text-[var(--primary)] hover:underline"
+            >
+              Профиль ВКонтакте →
+            </a>
+          )}
         </div>
-        {data.author.bio && (
-          <p class="mt-3 text-sm text-[var(--muted-foreground)]">{data.author.bio}</p>
-        )}
-        {data.author.vkUrl && (
-          <a
-            href={data.author.vkUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="mt-3 inline-flex items-center gap-1.5 text-sm text-[var(--primary)] hover:underline"
-          >
-            Профиль ВКонтакте →
-          </a>
-        )}
-      </div>
-    )}
+      )
+    }
 
-    {data.howToGetCustomText && (
-      <section class="mx-auto mt-10 max-w-3xl">
-        <h2 class="mb-3 text-2xl font-semibold">Как добраться</h2>
-        <div class="prose prose-neutral max-w-none whitespace-pre-line">
-          {data.howToGetCustomText}
-        </div>
-      </section>
-    )}
+    {
+      data.howToGetCustomText && (
+        <section class="mx-auto mt-10 max-w-3xl">
+          <h2 class="mb-3 text-2xl font-semibold">Как добраться</h2>
+          <div class="prose prose-neutral max-w-none whitespace-pre-line">
+            {data.howToGetCustomText}
+          </div>
+        </section>
+      )
+    }
 
-    {data.whatToTakeCustomText && (
-      <section class="mx-auto mt-10 max-w-3xl">
-        <h2 class="mb-3 text-2xl font-semibold">Что взять</h2>
-        <div class="prose prose-neutral max-w-none whitespace-pre-line">
-          {data.whatToTakeCustomText}
-        </div>
-      </section>
-    )}
+    {
+      data.whatToTakeCustomText && (
+        <section class="mx-auto mt-10 max-w-3xl">
+          <h2 class="mb-3 text-2xl font-semibold">Что взять</h2>
+          <div class="prose prose-neutral max-w-none whitespace-pre-line">
+            {data.whatToTakeCustomText}
+          </div>
+        </section>
+      )
+    }
 
     <LightboxRoot client:idle />
   </article>

@@ -13,7 +13,7 @@ const TOMSK_DEFAULT_BOUNDS: LeafletBounds = [
 ];
 
 export function calculateBoundsFromGeoJson(
-  geo: GeoJsonLineString
+  geo: GeoJsonLineString,
 ): LeafletBounds {
   if (!geo.coordinates.length) return TOMSK_DEFAULT_BOUNDS;
   let minLat = Infinity,
@@ -35,7 +35,7 @@ export function calculateBoundsFromGeoJson(
 }
 
 export function geoJsonToLeafletLatLngs(
-  geo: GeoJsonLineString
+  geo: GeoJsonLineString,
 ): [number, number][] {
   return geo.coordinates.map(([lng, lat]) => [lat, lng]);
 }
@@ -55,7 +55,7 @@ export function geoJsonToGpx(geo: GeoJsonLineString, name = "Маршрут"): s
   const points = geo.coordinates
     .map(
       ([lng, lat]) =>
-        `      <trkpt lat="${lat.toFixed(6)}" lon="${lng.toFixed(6)}"></trkpt>`
+        `      <trkpt lat="${lat.toFixed(6)}" lon="${lng.toFixed(6)}"></trkpt>`,
     )
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -78,7 +78,11 @@ ${points}
 `;
 }
 
-export function downloadGpx(geo: GeoJsonLineString, slug: string, name: string): void {
+export function downloadGpx(
+  geo: GeoJsonLineString,
+  slug: string,
+  name: string,
+): void {
   const xml = geoJsonToGpx(geo, name);
   const blob = new Blob([xml], { type: "application/gpx+xml;charset=utf-8" });
   const url = URL.createObjectURL(blob);

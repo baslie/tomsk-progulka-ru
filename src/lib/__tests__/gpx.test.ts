@@ -25,7 +25,7 @@ describe("calculateBoundsFromGeoJson", () => {
       line([
         [84.0, 56.0],
         [84.4, 56.2],
-      ])
+      ]),
     );
     expect(bounds[0][0]).toBeCloseTo(56.0 - 0.02, 6); // minLat - 10%
     expect(bounds[0][1]).toBeCloseTo(84.0 - 0.04, 6); // minLng - 10%
@@ -47,8 +47,8 @@ describe("geoJsonToLeafletLatLngs", () => {
         line([
           [84.9, 56.4],
           [85.0, 56.5],
-        ])
-      )
+        ]),
+      ),
     ).toEqual([
       [56.4, 84.9],
       [56.5, 85.0],
@@ -58,7 +58,10 @@ describe("geoJsonToLeafletLatLngs", () => {
 
 describe("geoJsonToGpx", () => {
   it("округляет координаты до 6 знаков и подставляет имя", () => {
-    const gpx = geoJsonToGpx(line([[84.123456789, 56.987654321]]), "Тестовый маршрут");
+    const gpx = geoJsonToGpx(
+      line([[84.123456789, 56.987654321]]),
+      "Тестовый маршрут",
+    );
     expect(gpx).toContain('lat="56.987654"');
     expect(gpx).toContain('lon="84.123457"');
     expect(gpx).toContain("<name>Тестовый маршрут</name>");

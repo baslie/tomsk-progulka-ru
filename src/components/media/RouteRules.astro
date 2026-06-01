@@ -13,48 +13,54 @@ interface Props {
 const { title, intro, rules } = Astro.props;
 ---
 
-<section class="not-prose my-8 rounded-2xl border border-[var(--border)] bg-[var(--muted)] p-5 md:p-7">
-  {title && (
-    <h2 class="flex items-center gap-2 text-xl font-semibold md:text-2xl">
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="text-[var(--primary)]"
-        aria-hidden="true"
-      >
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        <path d="m9 12 2 2 4-4" />
-      </svg>
-      {title}
-    </h2>
-  )}
-
-  {intro && (
-    <p class="mt-3 text-[var(--muted-foreground)]">{intro}</p>
-  )}
-
-  <ol class="mt-5 grid gap-3 sm:grid-cols-2">
-    {rules.map((rule, i) => (
-      <li class="flex gap-3 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
-        <span
-          class="flex size-7 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-sm font-bold text-[var(--primary-foreground)]"
+<section
+  class="not-prose my-8 rounded-2xl border border-[var(--border)] bg-[var(--muted)] p-5 md:p-7"
+>
+  {
+    title && (
+      <h2 class="flex items-center gap-2 text-xl font-semibold md:text-2xl">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="text-[var(--primary)]"
           aria-hidden="true"
         >
-          {i + 1}
-        </span>
-        <div>
-          <div class="font-semibold leading-snug">{rule.title}</div>
-          {rule.text && (
-            <p class="mt-1 text-sm text-[var(--muted-foreground)]">{rule.text}</p>
-          )}
-        </div>
-      </li>
-    ))}
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+        {title}
+      </h2>
+    )
+  }
+
+  {intro && <p class="mt-3 text-[var(--muted-foreground)]">{intro}</p>}
+
+  <ol class="mt-5 grid gap-3 sm:grid-cols-2">
+    {
+      rules.map((rule, i) => (
+        <li class="flex gap-3 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
+          <span
+            class="flex size-7 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-sm font-bold text-[var(--primary-foreground)]"
+            aria-hidden="true"
+          >
+            {i + 1}
+          </span>
+          <div>
+            <div class="font-semibold leading-snug">{rule.title}</div>
+            {rule.text && (
+              <p class="mt-1 text-sm text-[var(--muted-foreground)]">
+                {rule.text}
+              </p>
+            )}
+          </div>
+        </li>
+      ))
+    }
   </ol>
 </section>

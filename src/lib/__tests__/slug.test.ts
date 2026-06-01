@@ -22,7 +22,9 @@ describe("transliterate", () => {
 describe("generateSlug", () => {
   it("приводит к нижнему регистру и заменяет небуквенно-цифровое на дефис", () => {
     // й → "y" и ы → "y", поэтому «Северный» → "severnyy".
-    expect(generateSlug("Геокупол — Северный парк")).toBe("geokupol-severnyy-park");
+    expect(generateSlug("Геокупол — Северный парк")).toBe(
+      "geokupol-severnyy-park",
+    );
   });
 
   it("обрезает ведущие и хвостовые дефисы", () => {

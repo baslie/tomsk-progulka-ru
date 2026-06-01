@@ -96,7 +96,9 @@ export function RoutesMap({ routes }: { routes: MapRoute[] }) {
       polyline.bindPopup(popupHtml);
 
       if (latlngs.length > 0) {
-        L.marker(latlngs[0], { icon: createDotIcon(MARKER_START_COLOR) }).addTo(group);
+        L.marker(latlngs[0], { icon: createDotIcon(MARKER_START_COLOR) }).addTo(
+          group,
+        );
         L.marker(latlngs[latlngs.length - 1], {
           icon: createDotIcon(MARKER_FINISH_COLOR),
         }).addTo(group);

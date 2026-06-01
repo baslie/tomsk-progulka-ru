@@ -22,11 +22,14 @@ import { replaceSearch } from "@/lib/url";
 import { cn } from "@/lib/cn";
 
 const RoutesMap = React.lazy(() =>
-  import("@/components/maps/RoutesMap").then((m) => ({ default: m.RoutesMap }))
+  import("@/components/maps/RoutesMap").then((m) => ({ default: m.RoutesMap })),
 );
 
 export interface RoutesCatalogProps {
-  routes: (RouteCardData & RouteLike["data"] & { gpx: { type: "LineString"; coordinates: [number, number][] } })[];
+  routes: (RouteCardData &
+    RouteLike["data"] & {
+      gpx: { type: "LineString"; coordinates: [number, number][] };
+    })[];
 }
 
 function pluralizeRoutes(count: number): string {
@@ -64,13 +67,15 @@ export function RoutesCatalog({ routes }: RoutesCatalogProps) {
     () =>
       applyFilters(
         routes.map((r) => ({ data: r, original: r })),
-        filters
+        filters,
       ).map((x) => x.original),
-    [routes, filters]
+    [routes, filters],
   );
 
-  const updateFilter = <K extends keyof FilterState>(key: K, value: FilterState[K]) =>
-    setFilters((prev) => ({ ...prev, [key]: value }));
+  const updateFilter = <K extends keyof FilterState>(
+    key: K,
+    value: FilterState[K],
+  ) => setFilters((prev) => ({ ...prev, [key]: value }));
 
   const toggleDifficulty = (value: FilterState["difficulty"][number]) =>
     setFilters((prev) => ({
@@ -117,7 +122,7 @@ export function RoutesCatalog({ routes }: RoutesCatalogProps) {
             onChange={(e) =>
               updateFilter(
                 "distance",
-                (e.target.value || null) as FilterState["distance"]
+                (e.target.value || null) as FilterState["distance"],
               )
             }
             className="h-10 min-w-0 flex-1 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] sm:min-w-[170px] lg:flex-none"
@@ -135,7 +140,7 @@ export function RoutesCatalog({ routes }: RoutesCatalogProps) {
             onChange={(e) =>
               updateFilter(
                 "season",
-                (e.target.value || null) as FilterState["season"]
+                (e.target.value || null) as FilterState["season"],
               )
             }
             className="h-10 min-w-0 flex-1 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] sm:min-w-[160px] lg:flex-none"
@@ -161,7 +166,7 @@ export function RoutesCatalog({ routes }: RoutesCatalogProps) {
                     "inline-flex h-10 flex-1 items-center justify-center rounded-md border px-3 text-sm transition-colors lg:flex-none",
                     checked
                       ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
-                      : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:bg-[var(--muted)]"
+                      : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:bg-[var(--muted)]",
                   )}
                 >
                   {d.label}
@@ -175,7 +180,10 @@ export function RoutesCatalog({ routes }: RoutesCatalogProps) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2 text-sm">
           <span className="text-[var(--muted-foreground)]">
-            Найдено: <strong className="text-[var(--foreground)]">{filtered.length}</strong>{" "}
+            Найдено:{" "}
+            <strong className="text-[var(--foreground)]">
+              {filtered.length}
+            </strong>{" "}
             {pluralizeRoutes(filtered.length)}
           </span>
           {active && (
@@ -247,11 +255,21 @@ export function RoutesCatalog({ routes }: RoutesCatalogProps) {
               "inline-flex h-8 items-center gap-1.5 rounded-sm px-3 transition-colors",
               view === "list"
                 ? "bg-[var(--muted)] text-[var(--foreground)]"
-                : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]",
             )}
             aria-pressed={view === "list"}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
               <line x1="8" x2="21" y1="6" y2="6" />
               <line x1="8" x2="21" y1="12" y2="12" />
               <line x1="8" x2="21" y1="18" y2="18" />
@@ -268,11 +286,21 @@ export function RoutesCatalog({ routes }: RoutesCatalogProps) {
               "inline-flex h-8 items-center gap-1.5 rounded-sm px-3 transition-colors",
               view === "map"
                 ? "bg-[var(--muted)] text-[var(--foreground)]"
-                : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]",
             )}
             aria-pressed={view === "map"}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
               <path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619V16.5a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 18.382V6.5a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z" />
               <path d="M15 5.764v15" />
               <path d="M9 3.236v15" />

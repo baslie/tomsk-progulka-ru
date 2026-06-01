@@ -59,16 +59,16 @@ public/              # статика (картинки, favicon, robots.txt, CN
 
 Адреса указаны относительно корня сайта (`base` в `astro.config.mjs` не задан).
 
-| Адрес | Файл | Назначение |
-| --- | --- | --- |
-| `/` | `src/pages/index.astro` | Главная страница |
-| `/about` | `src/pages/about.astro` | О проекте |
-| `/contacts` | `src/pages/contacts.astro` | Контакты |
-| `/trails` | `src/pages/trails.astro` | Каталог маршрутов |
-| `/articles` | `src/pages/articles/index.astro` | Список статей |
-| `/articles/<slug>` | `src/pages/articles/[slug].astro` | Статья (динамический) |
-| `/routes/<slug>` | `src/pages/routes/[slug].astro` | Конкретный маршрут (динамический) |
-| `/404` | `src/pages/404.astro` | Страница ошибки 404 |
+| Адрес              | Файл                              | Назначение                        |
+| ------------------ | --------------------------------- | --------------------------------- |
+| `/`                | `src/pages/index.astro`           | Главная страница                  |
+| `/about`           | `src/pages/about.astro`           | О проекте                         |
+| `/contacts`        | `src/pages/contacts.astro`        | Контакты                          |
+| `/trails`          | `src/pages/trails.astro`          | Каталог маршрутов                 |
+| `/articles`        | `src/pages/articles/index.astro`  | Список статей                     |
+| `/articles/<slug>` | `src/pages/articles/[slug].astro` | Статья (динамический)             |
+| `/routes/<slug>`   | `src/pages/routes/[slug].astro`   | Конкретный маршрут (динамический) |
+| `/404`             | `src/pages/404.astro`             | Страница ошибки 404               |
 
 Динамические роуты (`<slug>`) генерируются из контент-коллекций через `getStaticPaths`.
 

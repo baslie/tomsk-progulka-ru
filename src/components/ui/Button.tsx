@@ -9,7 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90",
+        default:
+          "bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90",
         outline:
           "border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--muted)]",
         ghost: "hover:bg-[var(--muted)]",
@@ -25,7 +26,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: { variant: "default", size: "default" },
-  }
+  },
 );
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
@@ -41,7 +42,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       />
     );
-  }
+  },
 );
 Button.displayName = "Button";
 

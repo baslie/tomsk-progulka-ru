@@ -11,11 +11,7 @@ import {
   formatDistance,
   MARKER_FINISH_COLOR,
 } from "@/lib/constants";
-import {
-  addOsmTileLayer,
-  createDotIcon,
-  MAP_FIT_PADDING,
-} from "@/lib/leaflet";
+import { addOsmTileLayer, createDotIcon, MAP_FIT_PADDING } from "@/lib/leaflet";
 
 export interface RouteTrack {
   name: string;
@@ -52,11 +48,11 @@ export function RouteMap({ gpx, color = "#3B82F6", tracks }: Props) {
         : gpx
           ? [{ name: "Маршрут", gpx, color }]
           : [],
-    [tracks, gpx, color]
+    [tracks, gpx, color],
   );
 
   const [visible, setVisible] = React.useState<boolean[]>(() =>
-    list.map(() => true)
+    list.map(() => true),
   );
 
   React.useEffect(() => {
@@ -72,7 +68,7 @@ export function RouteMap({ gpx, color = "#3B82F6", tracks }: Props) {
       const latlngs = geoJsonToLeafletLatLngs(track.gpx);
       const group = L.featureGroup();
       L.polyline(latlngs, { color: trackColor, weight: 5, opacity: 0.9 }).addTo(
-        group
+        group,
       );
       if (latlngs.length > 0) {
         L.marker(latlngs[0], {

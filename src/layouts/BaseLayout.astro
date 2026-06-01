@@ -15,7 +15,14 @@ interface Props {
   heroOverlay?: boolean;
 }
 
-const { title, description, image, type, canonical, heroOverlay = false } = Astro.props;
+const {
+  title,
+  description,
+  image,
+  type,
+  canonical,
+  heroOverlay = false,
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -26,7 +33,13 @@ const { title, description, image, type, canonical, heroOverlay = false } = Astr
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta name="p:domain_verify" content="b791ec9276857eddc8fa55257606340b" />
-    <SEO title={title} description={description} image={image} type={type} canonical={canonical} />
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      canonical={canonical}
+    />
     <YandexMetrika />
   </head>
   <body class="flex min-h-screen flex-col">

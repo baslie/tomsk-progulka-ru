@@ -36,47 +36,64 @@ const description = data.description ?? "";
     </nav>
 
     <header class="mb-8">
-      <span class="inline-flex h-7 items-center rounded-full bg-[var(--secondary)] px-3 text-xs font-medium text-[var(--secondary-foreground)]">
+      <span
+        class="inline-flex h-7 items-center rounded-full bg-[var(--secondary)] px-3 text-xs font-medium text-[var(--secondary-foreground)]"
+      >
         {ARTICLE_CATEGORY_LABELS[data.category]}
       </span>
-      <h1 class="mt-3 text-3xl font-bold tracking-tight md:text-4xl">{data.title}</h1>
-      <div class="mt-3 flex items-center gap-3 text-sm text-[var(--muted-foreground)]">
+      <h1 class="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
+        {data.title}
+      </h1>
+      <div
+        class="mt-3 flex items-center gap-3 text-sm text-[var(--muted-foreground)]"
+      >
         {data.author && <span>{data.author.name}</span>}
         {data.author && <span>·</span>}
-        <time datetime={data.publishedAt.toISOString()}>{formatDateRu(data.publishedAt)}</time>
+        <time datetime={data.publishedAt.toISOString()}
+          >{formatDateRu(data.publishedAt)}</time
+        >
       </div>
     </header>
 
-    {data.coverImage && (
-      <img
-        src={data.coverImage}
-        alt={data.title}
-        class="mb-8 w-full rounded-xl object-cover"
-        loading="eager"
-        decoding="async"
-      />
-    )}
+    {
+      data.coverImage && (
+        <img
+          src={data.coverImage}
+          alt={data.title}
+          class="mb-8 w-full rounded-xl object-cover"
+          loading="eager"
+          decoding="async"
+        />
+      )
+    }
 
     <div class="prose prose-neutral max-w-none">
       <Content />
     </div>
 
-    {data.gallery.length > 0 && (
-      <section class="mt-10">
-        <h2 class="mb-4 text-xl font-semibold">Галерея</h2>
-        <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
-          {data.gallery.map((img) => (
-            <figure class="overflow-hidden rounded-lg border border-[var(--border)]">
-              <img src={img.src} alt={img.alt ?? ""} loading="lazy" class="h-full w-full object-cover" />
-              {img.caption && (
-                <figcaption class="bg-[var(--muted)] p-2 text-center text-xs text-[var(--muted-foreground)]">
-                  {img.caption}
-                </figcaption>
-              )}
-            </figure>
-          ))}
-        </div>
-      </section>
-    )}
+    {
+      data.gallery.length > 0 && (
+        <section class="mt-10">
+          <h2 class="mb-4 text-xl font-semibold">Галерея</h2>
+          <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+            {data.gallery.map((img) => (
+              <figure class="overflow-hidden rounded-lg border border-[var(--border)]">
+                <img
+                  src={img.src}
+                  alt={img.alt ?? ""}
+                  loading="lazy"
+                  class="h-full w-full object-cover"
+                />
+                {img.caption && (
+                  <figcaption class="bg-[var(--muted)] p-2 text-center text-xs text-[var(--muted-foreground)]">
+                    {img.caption}
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        </section>
+      )
+    }
   </article>
 </BaseLayout>

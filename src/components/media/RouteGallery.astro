@@ -18,8 +18,11 @@ const { items, columns = 3 } = Astro.props;
 const prepared = await Promise.all(
   items.map(async (item) => ({
     ...item,
-    img: await buildLightboxImage(item.image, { thumbWidth: 900, fullWidth: 2000 }),
-  }))
+    img: await buildLightboxImage(item.image, {
+      thumbWidth: 900,
+      fullWidth: 2000,
+    }),
+  })),
 );
 
 const colClass: Record<number, string> = {
@@ -29,27 +32,31 @@ const colClass: Record<number, string> = {
 };
 ---
 
-<div class={`full-bleed not-prose my-6 grid grid-cols-1 gap-3 ${colClass[columns]}`}>
-  {prepared.map((item) => (
-    <a
-      href={item.img.fullSrc}
-      data-pswp
-      data-pswp-width={item.img.fullWidth}
-      data-pswp-height={item.img.fullHeight}
-      data-pswp-caption={item.caption ?? item.alt}
-      target="_blank"
-      rel="noopener"
-      class="group relative block aspect-[4/3] overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--muted)] cursor-zoom-in"
-    >
-      <img
-        src={item.img.thumbSrc}
-        width={item.img.thumbWidth}
-        height={item.img.thumbHeight}
-        alt={item.alt}
-        loading="lazy"
-        decoding="async"
-        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-      />
-    </a>
-  ))}
+<div
+  class={`full-bleed not-prose my-6 grid grid-cols-1 gap-3 ${colClass[columns]}`}
+>
+  {
+    prepared.map((item) => (
+      <a
+        href={item.img.fullSrc}
+        data-pswp
+        data-pswp-width={item.img.fullWidth}
+        data-pswp-height={item.img.fullHeight}
+        data-pswp-caption={item.caption ?? item.alt}
+        target="_blank"
+        rel="noopener"
+        class="group relative block aspect-[4/3] overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--muted)] cursor-zoom-in"
+      >
+        <img
+          src={item.img.thumbSrc}
+          width={item.img.thumbWidth}
+          height={item.img.thumbHeight}
+          alt={item.alt}
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+      </a>
+    ))
+  }
 </div>

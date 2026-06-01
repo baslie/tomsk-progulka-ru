@@ -24,7 +24,7 @@ interface Options {
  */
 export async function buildLightboxImage(
   image: ImageMetadata,
-  { thumbWidth = 1400, fullWidth = 2000 }: Options = {}
+  { thumbWidth = 1400, fullWidth = 2000 }: Options = {},
 ): Promise<LightboxImage> {
   const ratio = image.height / image.width;
   const tW = Math.min(image.width, thumbWidth);

@@ -39,9 +39,15 @@ describe("applyFilters", () => {
       route({ region: "Северск" }),
       route({ title: "Прочее" }),
     ];
-    expect(applyFilters(routes, { ...DEFAULT_FILTERS, q: "геокупол" })).toHaveLength(1);
-    expect(applyFilters(routes, { ...DEFAULT_FILTERS, q: "вид" })).toHaveLength(1);
-    expect(applyFilters(routes, { ...DEFAULT_FILTERS, q: "северск" })).toHaveLength(1);
+    expect(
+      applyFilters(routes, { ...DEFAULT_FILTERS, q: "геокупол" }),
+    ).toHaveLength(1);
+    expect(applyFilters(routes, { ...DEFAULT_FILTERS, q: "вид" })).toHaveLength(
+      1,
+    );
+    expect(
+      applyFilters(routes, { ...DEFAULT_FILTERS, q: "северск" }),
+    ).toHaveLength(1);
   });
 
   it("фильтрует по диапазону расстояния (min<=x<max)", () => {
@@ -55,20 +61,33 @@ describe("applyFilters", () => {
   });
 
   it("диапазон 20+ включает всё от 20 км", () => {
-    const routes = [route({ distanceKm: 19 }), route({ distanceKm: 20 }), route({ distanceKm: 100 })];
+    const routes = [
+      route({ distanceKm: 19 }),
+      route({ distanceKm: 20 }),
+      route({ distanceKm: 100 }),
+    ];
     const r = applyFilters(routes, { ...DEFAULT_FILTERS, distance: "20+" });
     expect(r.map((x) => x.data.distanceKm)).toEqual([20, 100]);
   });
 
   it("мультивыбор сложности", () => {
-    const routes = [route({ difficulty: "easy" }), route({ difficulty: "medium" }), route({ difficulty: "hard" })];
-    const r = applyFilters(routes, { ...DEFAULT_FILTERS, difficulty: ["easy", "hard"] });
+    const routes = [
+      route({ difficulty: "easy" }),
+      route({ difficulty: "medium" }),
+      route({ difficulty: "hard" }),
+    ];
+    const r = applyFilters(routes, {
+      ...DEFAULT_FILTERS,
+      difficulty: ["easy", "hard"],
+    });
     expect(r.map((x) => x.data.difficulty)).toEqual(["easy", "hard"]);
   });
 
   it("фильтрует по сезону", () => {
     const routes = [route({ season: "summer" }), route({ season: "winter" })];
-    expect(applyFilters(routes, { ...DEFAULT_FILTERS, season: "winter" })).toHaveLength(1);
+    expect(
+      applyFilters(routes, { ...DEFAULT_FILTERS, season: "winter" }),
+    ).toHaveLength(1);
   });
 });
 
@@ -79,9 +98,15 @@ describe("hasActiveFilters", () => {
 
   it("true при любом активном фильтре", () => {
     expect(hasActiveFilters({ ...DEFAULT_FILTERS, q: "x" })).toBe(true);
-    expect(hasActiveFilters({ ...DEFAULT_FILTERS, distance: "0-5" })).toBe(true);
-    expect(hasActiveFilters({ ...DEFAULT_FILTERS, difficulty: ["easy"] })).toBe(true);
-    expect(hasActiveFilters({ ...DEFAULT_FILTERS, season: "summer" })).toBe(true);
+    expect(hasActiveFilters({ ...DEFAULT_FILTERS, distance: "0-5" })).toBe(
+      true,
+    );
+    expect(hasActiveFilters({ ...DEFAULT_FILTERS, difficulty: ["easy"] })).toBe(
+      true,
+    );
+    expect(hasActiveFilters({ ...DEFAULT_FILTERS, season: "summer" })).toBe(
+      true,
+    );
   });
 
   it("пустой запрос с пробелами не считается активным", () => {
@@ -108,9 +133,10 @@ describe("get*Label", () => {
 });
 
 describe("readFiltersFromSearch / writeFiltersToSearch round-trip", () => {
-
   it("читает валидные параметры и игнорирует мусор", () => {
-    const f = readFiltersFromSearch("?q=лес&distance=5-10&season=winter&difficulty=easy&difficulty=hard&difficulty=bad");
+    const f = readFiltersFromSearch(
+      "?q=лес&distance=5-10&season=winter&difficulty=easy&difficulty=hard&difficulty=bad",
+    );
     expect(f).toEqual<FilterState>({
       q: "лес",
       distance: "5-10",

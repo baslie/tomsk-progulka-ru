@@ -13,14 +13,19 @@ export interface ArticleListItem {
   authorName?: string;
 }
 
-const CATEGORIES: Array<{ value: "all" | keyof typeof ARTICLE_CATEGORY_LABELS; label: string }> = [
+const CATEGORIES: Array<{
+  value: "all" | keyof typeof ARTICLE_CATEGORY_LABELS;
+  label: string;
+}> = [
   { value: "all", label: "Все" },
   { value: "how_to_get", label: ARTICLE_CATEGORY_LABELS.how_to_get },
   { value: "what_to_take", label: ARTICLE_CATEGORY_LABELS.what_to_take },
   { value: "general", label: ARTICLE_CATEGORY_LABELS.general },
 ];
 
-function readCategory(search: string): "all" | keyof typeof ARTICLE_CATEGORY_LABELS {
+function readCategory(
+  search: string,
+): "all" | keyof typeof ARTICLE_CATEGORY_LABELS {
   const sp = new URLSearchParams(search);
   const c = sp.get("category");
   if (c === "how_to_get" || c === "what_to_take" || c === "general") return c;
@@ -47,7 +52,9 @@ export function ArticlesCatalog({ articles }: { articles: ArticleListItem[] }) {
   }, [category, hydrated]);
 
   const filtered =
-    category === "all" ? articles : articles.filter((a) => a.category === category);
+    category === "all"
+      ? articles
+      : articles.filter((a) => a.category === category);
 
   return (
     <div className="flex flex-col gap-6">
@@ -64,7 +71,7 @@ export function ArticlesCatalog({ articles }: { articles: ArticleListItem[] }) {
                 "inline-flex h-9 items-center rounded-full border px-4 text-sm transition-colors",
                 active
                   ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
-                  : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:bg-[var(--muted)]"
+                  : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:bg-[var(--muted)]",
               )}
             >
               {c.label}

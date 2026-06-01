@@ -10,7 +10,12 @@ interface Props {
 const { title, description, image } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} image={image} type="article">
+<BaseLayout
+  title={title}
+  description={description}
+  image={image}
+  type="article"
+>
   <article class="container max-w-3xl py-10">
     <slot />
   </article>

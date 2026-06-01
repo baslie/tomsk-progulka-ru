@@ -12,8 +12,8 @@ info@tomsk-progulka.ru
 
 ### Социальные сети
 
--   ВКонтакте: vk.com/tomskaya\_progulka
--   Telegram: @tomskaya\_progulka
+- ВКонтакте: vk.com/tomskaya_progulka
+- Telegram: @tomskaya_progulka
 
 ### Адрес
 

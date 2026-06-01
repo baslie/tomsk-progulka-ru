@@ -9,5 +9,5 @@
     "jsxImportSource": "react"
   },
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "vitest.config.ts"]
+  "exclude": ["dist", "vitest.config.ts", "eslint.config.js"]
 }

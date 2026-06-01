@@ -28,9 +28,22 @@ function isActive(href: string): boolean {
   data-scrolled={transparentOnTop ? "false" : "true"}
 >
   <div class="container flex h-16 items-center justify-between">
-    <a href="/" class="flex items-center transition-opacity hover:opacity-80" aria-label="Томская Прогулка">
-      <img src="/logo-white.svg" alt="" aria-hidden="true" class="logo logo-light h-8 w-auto" />
-      <img src="/logo.svg" alt="Томская Прогулка" class="logo logo-dark h-8 w-auto" />
+    <a
+      href="/"
+      class="flex items-center transition-opacity hover:opacity-80"
+      aria-label="Томская Прогулка"
+    >
+      <img
+        src="/logo-white.svg"
+        alt=""
+        aria-hidden="true"
+        class="logo logo-light h-8 w-auto"
+      />
+      <img
+        src="/logo.svg"
+        alt="Томская Прогулка"
+        class="logo logo-dark h-8 w-auto"
+      />
     </a>
 
     <nav class="hidden items-center gap-6 md:flex">
@@ -52,28 +65,51 @@ function isActive(href: string): boolean {
       class="mobile-burger flex size-9 cursor-pointer items-center justify-center rounded-md transition-colors md:hidden"
       aria-label="Меню"
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="3" x2="21" y1="6" y2="6" />
-        <line x1="3" x2="21" y1="12" y2="12" />
-        <line x1="3" x2="21" y1="18" y2="18" />
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="3" x2="21" y1="6" y2="6"></line>
+        <line x1="3" x2="21" y1="12" y2="12"></line>
+        <line x1="3" x2="21" y1="18" y2="18"></line>
       </svg>
     </label>
   </div>
 </header>
 
 <input id="mobile-drawer-toggle" type="checkbox" class="mobile-drawer-toggle" />
-<label for="mobile-drawer-toggle" class="mobile-drawer-overlay fixed inset-0 z-40 bg-black/40 md:hidden" aria-hidden="true"></label>
+<label
+  for="mobile-drawer-toggle"
+  class="mobile-drawer-overlay fixed inset-0 z-40 bg-black/40 md:hidden"
+  aria-hidden="true"></label>
 
-<aside class="mobile-drawer fixed top-0 right-0 z-50 flex h-full w-[280px] flex-col border-l border-[var(--border)] bg-[var(--background)] md:hidden">
+<aside
+  class="mobile-drawer fixed top-0 right-0 z-50 flex h-full w-[280px] flex-col border-l border-[var(--border)] bg-[var(--background)] md:hidden"
+>
   <div class="flex h-16 items-center justify-end px-6">
     <label
       for="mobile-drawer-toggle"
       class="flex size-8 cursor-pointer items-center justify-center rounded-md hover:bg-[var(--muted)]"
       aria-label="Закрыть"
     >
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 6 6 18" />
-        <path d="m6 6 12 12" />
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M18 6 6 18"></path>
+        <path d="m6 6 12 12"></path>
       </svg>
     </label>
   </div>
@@ -97,7 +133,9 @@ function isActive(href: string): boolean {
   </nav>
 
   <div class="mt-auto border-t border-[var(--border)] px-6 py-5">
-    <p class="mb-3 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
+    <p
+      class="mb-3 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground)]"
+    >
       Связаться
     </p>
     <div class="flex flex-col gap-3">
@@ -141,9 +179,15 @@ function isActive(href: string): boolean {
   }
 
   /* Logo swap */
-  .logo-light { display: none; }
-  .site-header[data-scrolled="false"] .logo-light { display: block; }
-  .site-header[data-scrolled="false"] .logo-dark { display: none; }
+  .logo-light {
+    display: none;
+  }
+  .site-header[data-scrolled="false"] .logo-light {
+    display: block;
+  }
+  .site-header[data-scrolled="false"] .logo-dark {
+    display: none;
+  }
 
   /* Nav links */
   .nav-link {

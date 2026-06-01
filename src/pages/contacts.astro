@@ -3,12 +3,15 @@ import { getEntry, render } from "astro:content";
 import ContentLayout from "@/layouts/ContentLayout.astro";
 
 const entry = await getEntry("pages", "contacts");
-if (!entry) throw new Error("Страница 'contacts' не найдена в src/content/pages/");
+if (!entry)
+  throw new Error("Страница 'contacts' не найдена в src/content/pages/");
 const { Content } = await render(entry);
 ---
 
 <ContentLayout title={entry.data.title} description={entry.data.description}>
-  <h1 class="mb-6 text-3xl font-bold tracking-tight md:text-4xl">{entry.data.title}</h1>
+  <h1 class="mb-6 text-3xl font-bold tracking-tight md:text-4xl">
+    {entry.data.title}
+  </h1>
   <div class="prose prose-neutral max-w-none">
     <Content />
   </div>

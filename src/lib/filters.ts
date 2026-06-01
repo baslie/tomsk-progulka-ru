@@ -10,7 +10,13 @@ export const DISTANCE_RANGES = [
 // Порядок элементов в UI-селекторах фиксируется здесь; подписи берутся из
 // единого источника в constants.ts (без дублирования строк).
 const DIFFICULTY_ORDER = ["easy", "medium", "hard"] as const;
-const SEASON_ORDER = ["all_year", "spring", "summer", "autumn", "winter"] as const;
+const SEASON_ORDER = [
+  "all_year",
+  "spring",
+  "summer",
+  "autumn",
+  "winter",
+] as const;
 
 export const DIFFICULTY_OPTIONS = DIFFICULTY_ORDER.map((value) => ({
   value,
@@ -78,7 +84,7 @@ export function readFiltersFromSearch(search: string): FilterState {
 
   const difficultyRaw = sp.getAll("difficulty");
   const difficulty = difficultyRaw.filter((v) =>
-    DIFFICULTY_OPTIONS.some((d) => d.value === v)
+    DIFFICULTY_OPTIONS.some((d) => d.value === v),
   ) as DifficultyValue[];
 
   return {
@@ -116,7 +122,10 @@ export interface RouteLike {
   };
 }
 
-export function applyFilters<T extends RouteLike>(routes: T[], f: FilterState): T[] {
+export function applyFilters<T extends RouteLike>(
+  routes: T[],
+  f: FilterState,
+): T[] {
   return routes.filter((r) => {
     const d = r.data;
     if (f.q.trim()) {
@@ -126,9 +135,11 @@ export function applyFilters<T extends RouteLike>(routes: T[], f: FilterState): 
     }
     if (f.distance) {
       const range = DISTANCE_RANGES.find((r) => r.value === f.distance);
-      if (range && (d.distanceKm < range.min || d.distanceKm >= range.max)) return false;
+      if (range && (d.distanceKm < range.min || d.distanceKm >= range.max))
+        return false;
     }
-    if (f.difficulty.length > 0 && !f.difficulty.includes(d.difficulty)) return false;
+    if (f.difficulty.length > 0 && !f.difficulty.includes(d.difficulty))
+      return false;
     if (f.season && d.season !== f.season) return false;
     return true;
   });

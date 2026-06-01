@@ -42,7 +42,7 @@ const routes = defineCollection({
             gpx: trackGeom,
             // Публичный путь к оригинальному .gpx (с высотами) для скачивания.
             gpxFile: z.string().optional(),
-          })
+          }),
         )
         .optional(),
       // Оптимизируемая через astro:assets галерея с лайтбоксом.
@@ -52,7 +52,7 @@ const routes = defineCollection({
             image: image(),
             alt: z.string(),
             caption: z.string().optional(),
-          })
+          }),
         )
         .optional(),
       howToGetCustomText: z.string().optional(),
@@ -75,7 +75,7 @@ const articles = defineCollection({
           src: z.string(),
           alt: z.string().optional(),
           caption: z.string().optional(),
-        })
+        }),
       )
       .default([]),
     publishedAt: z.coerce.date(),
