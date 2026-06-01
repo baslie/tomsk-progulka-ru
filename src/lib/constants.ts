@@ -54,6 +54,10 @@ export function getTrackColor(index: number): string {
   return TRACK_COLORS[index % TRACK_COLORS.length];
 }
 
+/** Цвета маркеров старта/финиша на картах. */
+export const MARKER_START_COLOR = "#22c55e";
+export const MARKER_FINISH_COLOR = "#ef4444";
+
 export function formatDuration(minutes: number): string {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;

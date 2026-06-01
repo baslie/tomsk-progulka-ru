@@ -9,12 +9,21 @@ import {
   formatDistance,
   formatDuration,
   getTrackColor,
+  MARKER_START_COLOR,
+  MARKER_FINISH_COLOR,
 } from "@/lib/constants";
 import {
   calculateBoundsFromGeoJson,
   geoJsonToLeafletLatLngs,
   type Coord,
+  type LeafletBounds,
 } from "@/lib/gpx";
+import {
+  addOsmTileLayer,
+  createDotIcon,
+  mergeBoundsList,
+  MAP_FIT_PADDING,
+} from "@/lib/leaflet";
 
 interface MapRoute {
   slug: string;
@@ -25,24 +34,6 @@ interface MapRoute {
   durationMin: number;
   region: string;
   gpx: { type: "LineString"; coordinates: Coord[] };
-}
-
-function startIcon() {
-  return L.divIcon({
-    className: "",
-    html: `<div style="background:#22c55e;width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div>`,
-    iconSize: [16, 16],
-    iconAnchor: [8, 8],
-  });
-}
-
-function endIcon() {
-  return L.divIcon({
-    className: "",
-    html: `<div style="background:#ef4444;width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div>`,
-    iconSize: [16, 16],
-    iconAnchor: [8, 8],
-  });
 }
 
 export function RoutesMap({ routes }: { routes: MapRoute[] }) {
@@ -59,11 +50,7 @@ export function RoutesMap({ routes }: { routes: MapRoute[] }) {
       scrollWheelZoom: true,
     });
 
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      maxZoom: 19,
-    }).addTo(map);
+    addOsmTileLayer(map);
 
     layersRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
@@ -84,7 +71,7 @@ export function RoutesMap({ routes }: { routes: MapRoute[] }) {
 
     if (!routes.length) return;
 
-    const allBounds: L.LatLngBoundsExpression[] = [];
+    const allBounds: LeafletBounds[] = [];
 
     routes.forEach((route, i) => {
       const color = getTrackColor(i);
@@ -108,22 +95,17 @@ export function RoutesMap({ routes }: { routes: MapRoute[] }) {
       polyline.bindPopup(popupHtml);
 
       if (latlngs.length > 0) {
-        L.marker(latlngs[0], { icon: startIcon() }).addTo(group);
-        L.marker(latlngs[latlngs.length - 1], { icon: endIcon() }).addTo(group);
+        L.marker(latlngs[0], { icon: createDotIcon(MARKER_START_COLOR) }).addTo(group);
+        L.marker(latlngs[latlngs.length - 1], {
+          icon: createDotIcon(MARKER_FINISH_COLOR),
+        }).addTo(group);
       }
 
-      const b = calculateBoundsFromGeoJson(route.gpx);
-      allBounds.push(b);
+      allBounds.push(calculateBoundsFromGeoJson(route.gpx));
     });
 
     if (allBounds.length > 0) {
-      const merged = L.latLngBounds(
-        allBounds.flatMap((b) => [
-          (b as [[number, number], [number, number]])[0],
-          (b as [[number, number], [number, number]])[1],
-        ])
-      );
-      map.fitBounds(merged, { padding: [24, 24] });
+      map.fitBounds(mergeBoundsList(allBounds), { padding: MAP_FIT_PADDING });
     }
   }, [routes]);
 

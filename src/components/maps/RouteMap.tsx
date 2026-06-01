@@ -6,7 +6,16 @@ import {
   geoJsonToLeafletLatLngs,
   type GeoJsonLineString,
 } from "@/lib/gpx";
-import { getTrackColor, formatDistance } from "@/lib/constants";
+import {
+  getTrackColor,
+  formatDistance,
+  MARKER_FINISH_COLOR,
+} from "@/lib/constants";
+import {
+  addOsmTileLayer,
+  createDotIcon,
+  MAP_FIT_PADDING,
+} from "@/lib/leaflet";
 
 export interface RouteTrack {
   name: string;
@@ -21,24 +30,6 @@ interface Props {
   color?: string;
   /** Несколько именованных вариантов маршрута. Имеет приоритет над gpx. */
   tracks?: RouteTrack[];
-}
-
-function startIcon(color: string) {
-  return L.divIcon({
-    className: "",
-    html: `<div style="background:${color};width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 1px 3px rgba(0,0,0,.4)"></div>`,
-    iconSize: [16, 16],
-    iconAnchor: [8, 8],
-  });
-}
-
-function finishIcon() {
-  return L.divIcon({
-    className: "",
-    html: `<div style="background:#ef4444;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 1px 3px rgba(0,0,0,.4)"></div>`,
-    iconSize: [18, 18],
-    iconAnchor: [9, 9],
-  });
 }
 
 function mergeBounds(tracks: RouteTrack[]): L.LatLngBoundsExpression {
@@ -74,11 +65,7 @@ export function RouteMap({ gpx, color = "#3B82F6", tracks }: Props) {
     const map = L.map(containerRef.current, { scrollWheelZoom: true });
     mapRef.current = map;
 
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      maxZoom: 19,
-    }).addTo(map);
+    addOsmTileLayer(map);
 
     const groups: L.FeatureGroup[] = list.map((track, i) => {
       const trackColor = track.color ?? getTrackColor(i);
@@ -89,11 +76,11 @@ export function RouteMap({ gpx, color = "#3B82F6", tracks }: Props) {
       );
       if (latlngs.length > 0) {
         L.marker(latlngs[0], {
-          icon: startIcon(trackColor),
+          icon: createDotIcon(trackColor, 16),
           title: `Старт: ${track.name}`,
         }).addTo(group);
         L.marker(latlngs[latlngs.length - 1], {
-          icon: finishIcon(),
+          icon: createDotIcon(MARKER_FINISH_COLOR, 18),
           title: "Финиш",
         }).addTo(group);
       }
@@ -102,7 +89,7 @@ export function RouteMap({ gpx, color = "#3B82F6", tracks }: Props) {
     });
     groupsRef.current = groups;
 
-    map.fitBounds(mergeBounds(list), { padding: [24, 24] });
+    map.fitBounds(mergeBounds(list), { padding: MAP_FIT_PADDING });
 
     return () => {
       map.remove();
