@@ -121,31 +121,30 @@ export function RouteCard({ route }: { route: RouteCardData }) {
                 className="size-6 shrink-0 rounded-full object-cover"
               />
             )}
-            <span>
-              {route.authorName}
-              {route.isOrganizer && (
-                <span className="ml-2 inline-flex items-center gap-0.5 text-[var(--primary)]">
-                  <svg
-                    width="11"
-                    height="11"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden
-                  >
-                    <path
-                      d="M9 12l2 2 4-4"
-                      stroke="white"
-                      strokeWidth="3"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <circle cx="12" cy="12" r="10" />
-                  </svg>
-                  Организатор
-                </span>
-              )}
-            </span>
+            <span className="leading-none">{route.authorName}</span>
+            {route.isOrganizer && (
+              <span className="inline-flex items-center gap-0.5 leading-none text-[var(--primary)]">
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="shrink-0"
+                  aria-hidden
+                >
+                  <path
+                    d="M9 12l2 2 4-4"
+                    stroke="white"
+                    strokeWidth="3"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <circle cx="12" cy="12" r="10" />
+                </svg>
+                Организатор
+              </span>
+            )}
           </div>
         )}
       </div>

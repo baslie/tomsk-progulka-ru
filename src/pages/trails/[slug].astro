@@ -204,8 +204,8 @@ const nakarteVariants = (
                     inline
                     buttonVariant="outline"
                     buttonSize="sm"
-                    containerClassName="flex flex-col gap-2"
-                    buttonClassName="h-auto min-h-7 w-full justify-start gap-1.5 whitespace-normal px-2 py-1.5 text-left text-[11px] leading-tight border-white/40 bg-transparent text-white hover:bg-white/10"
+                    containerClassName="flex flex-col items-start gap-2"
+                    buttonClassName="h-auto min-h-7 w-fit max-w-full justify-start gap-1.5 whitespace-normal px-3 py-1.5 text-left text-[11px] leading-tight border-white/40 bg-transparent text-white hover:bg-white/10"
                     client:load
                   />
                 ) : (
@@ -221,8 +221,8 @@ const nakarteVariants = (
                     inline
                     buttonVariant="outline"
                     buttonSize="sm"
-                    containerClassName="flex flex-col gap-2"
-                    buttonClassName="h-auto min-h-7 w-full justify-start gap-1.5 whitespace-normal px-2 py-1.5 text-left text-[11px] leading-tight border-white/40 bg-transparent text-white hover:bg-white/10"
+                    containerClassName="flex flex-col items-start gap-2"
+                    buttonClassName="h-auto min-h-7 w-fit max-w-full justify-start gap-1.5 whitespace-normal px-3 py-1.5 text-left text-[11px] leading-tight border-white/40 bg-transparent text-white hover:bg-white/10"
                     client:load
                   />
                 )
@@ -232,14 +232,14 @@ const nakarteVariants = (
               <p class="mb-2 text-xs font-medium text-white/80">
                 Смотреть на nakarte.me:
               </p>
-              <div class="flex flex-col gap-2">
+              <div class="flex flex-col items-start gap-2">
                 {
                   nakarteVariants.map((v) => (
                     <a
                       href={v.href}
                       target="_blank"
                       rel="nofollow noopener noreferrer"
-                      class="inline-flex min-h-7 w-full items-center gap-1.5 rounded-md border border-white/40 bg-transparent px-2 py-1.5 text-left text-[11px] font-medium leading-tight text-white transition-colors hover:bg-white/10"
+                      class="inline-flex min-h-7 w-fit max-w-full items-center gap-1.5 rounded-md border border-white/40 bg-transparent px-3 py-1.5 text-left text-[11px] font-medium leading-tight text-white transition-colors hover:bg-white/10"
                     >
                       <svg
                         width="14"
