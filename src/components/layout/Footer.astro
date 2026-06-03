@@ -36,7 +36,7 @@ const links = [
             href={link.href}
             class="inline-flex items-center gap-1.5 text-sm text-[var(--muted-foreground)] transition-colors hover:text-[var(--foreground)]"
             {...(link.external
-              ? { target: "_blank", rel: "noopener noreferrer" }
+              ? { target: "_blank", rel: "nofollow noopener noreferrer" }
               : {})}
           >
             {link.icon === "vk" && <VkIcon class="h-4 w-4" />}

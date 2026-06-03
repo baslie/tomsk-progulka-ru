@@ -30,9 +30,14 @@ describe("formatDistance", () => {
     expect(formatDistance(0.123)).toBe("123 м");
   });
 
-  it("показывает 1 знак после запятой для дистанции < 10 км", () => {
+  it("показывает 1 знак после запятой для дробной дистанции < 10 км", () => {
     expect(formatDistance(5.4)).toBe("5.4 км");
-    expect(formatDistance(1)).toBe("1.0 км");
+    expect(formatDistance(7.1)).toBe("7.1 км");
+  });
+
+  it("не выводит хвостовой .0 у целой дистанции < 10 км", () => {
+    expect(formatDistance(7)).toBe("7 км");
+    expect(formatDistance(1)).toBe("1 км");
   });
 
   it("округляет до целого для дистанции >= 10 км", () => {

@@ -11,7 +11,7 @@ title: Контакты
 - ВКонтакте: [vk.com/tomsk_progulka](https://vk.com/tomsk_progulka)
 - Telegram: [t.me/tomsk_progulka](https://t.me/tomsk_progulka)
 
-### Сотрудничество и реклама
+### Организаторы «Прогулки»
 
 - Главный организатор «Прогулки»&nbsp;— [Михаил Виноградов](https://vk.com/vinogradov_mike)
 - Реклама и&nbsp;сотрудничество&nbsp;— [Роман Пуртов](https://roman-purtow.ru)

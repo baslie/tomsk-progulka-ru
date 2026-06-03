@@ -80,7 +80,8 @@ export function formatDuration(minutes: number): string {
 
 export function formatDistance(km: number): string {
   if (km < 1) return `${Math.round(km * 1000)} м`;
-  return `${km.toFixed(km >= 10 ? 0 : 1)} км`;
+  const value = km >= 10 ? Math.round(km) : Math.round(km * 10) / 10;
+  return `${value} км`;
 }
 
 export function formatDateRu(date: Date | string): string {

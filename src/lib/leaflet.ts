@@ -3,7 +3,7 @@ import type { LeafletBounds } from "@/lib/gpx";
 
 export const OSM_TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 export const OSM_ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+  '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="nofollow noopener noreferrer">OpenStreetMap</a>';
 
 /** Паддинг при автоподгонке карты под границы трека(ов). */
 export const MAP_FIT_PADDING: [number, number] = [24, 24];

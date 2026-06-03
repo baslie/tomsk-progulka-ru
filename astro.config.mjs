@@ -4,11 +4,28 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import tailwindcss from "@tailwindcss/vite";
+import { unified } from "@astrojs/markdown-remark";
+import rehypeExternalLinks from "rehype-external-links";
 
 export default defineConfig({
   site: "https://tomsk-progulka.ru",
   redirects: {
     "/trails": "/",
+  },
+  // Внешние ссылки (http/https на чужие домены) в markdown/MDX-контенте
+  // открываем в новой вкладке и не передаём ссылочный вес. Внутренние ссылки
+  // (/trails/...) плагин не трогает. mdx() наследует markdown-конфиг, поэтому
+  // правило действует и в .md, и в .mdx. См. также точечные rel в компонентах.
+  // В Astro 6 плагины передаются через unified-процессор (markdown.processor).
+  markdown: {
+    processor: unified({
+      rehypePlugins: [
+        [
+          rehypeExternalLinks,
+          { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] },
+        ],
+      ],
+    }),
   },
   integrations: [
     react(),
