@@ -19,6 +19,7 @@ export interface RouteCardData {
   region: string;
   coverImage: string;
   authorName?: string;
+  authorAvatar?: string;
   isOrganizer?: boolean;
 }
 
@@ -110,30 +111,41 @@ export function RouteCard({ route }: { route: RouteCardData }) {
         </div>
 
         {route.authorName && (
-          <div className="border-t border-[var(--border)] pt-3 text-xs text-[var(--muted-foreground)]">
-            {route.authorName}
-            {route.isOrganizer && (
-              <span className="ml-2 inline-flex items-center gap-0.5 text-[var(--primary)]">
-                <svg
-                  width="11"
-                  height="11"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden
-                >
-                  <path
-                    d="M9 12l2 2 4-4"
-                    stroke="white"
-                    strokeWidth="3"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <circle cx="12" cy="12" r="10" />
-                </svg>
-                Организатор
-              </span>
+          <div className="flex items-center gap-2 border-t border-[var(--border)] pt-3 text-xs text-[var(--muted-foreground)]">
+            {route.authorAvatar && (
+              <img
+                src={route.authorAvatar}
+                alt={route.authorName}
+                loading="lazy"
+                decoding="async"
+                className="size-6 shrink-0 rounded-full object-cover"
+              />
             )}
+            <span>
+              {route.authorName}
+              {route.isOrganizer && (
+                <span className="ml-2 inline-flex items-center gap-0.5 text-[var(--primary)]">
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden
+                  >
+                    <path
+                      d="M9 12l2 2 4-4"
+                      stroke="white"
+                      strokeWidth="3"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <circle cx="12" cy="12" r="10" />
+                  </svg>
+                  Организатор
+                </span>
+              )}
+            </span>
           </div>
         )}
       </div>
